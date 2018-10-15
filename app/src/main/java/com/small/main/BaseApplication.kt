@@ -1,0 +1,50 @@
+package com.small.main
+
+import android.app.Application
+import android.support.v7.app.AppCompatDelegate
+import com.google.gson.GsonBuilder
+import com.small.main.data.repository.EventRepository
+import com.small.main.data.repository.EventRepositoryImpl
+import com.small.main.data.service.ApiService
+import com.small.main.ui.previousmatch.PrevMatchPresenter
+import com.small.main.ui.nextmatch.NextMatchPresenter
+import com.small.main.ui.favoritematch.FavoriteMatchPresenter
+import com.small.main.util.CoroutinesContextProvider
+import okhttp3.OkHttpClient
+import org.koin.android.ext.android.startKoin
+import org.koin.dsl.module.Module
+import org.koin.dsl.module.module
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
+class BaseApplication : Application() {
+
+    private val module: Module = module {
+        single<ApiService> {
+            val okHttpClient = OkHttpClient.Builder().build()
+            val gson = GsonBuilder().create()
+            val retrofit = Retrofit.Builder()
+                    .baseUrl(BuildConfig.BASE_URL)
+                    .client(okHttpClient)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build()
+            retrofit.create(ApiService::class.java)
+        }
+
+        // Single instance of EventRepository
+        single<EventRepository> { EventRepositoryImpl(get()) }
+        single { CoroutinesContextProvider() }
+
+        // Simple Presenter Factory
+        factory { PrevMatchPresenter(get(), get()) }
+        factory { NextMatchPresenter(get(), get()) }
+        factory { FavoriteMatchPresenter(get(), get()) }
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+        startKoin(this, listOf(module))
+    }
+
+}
