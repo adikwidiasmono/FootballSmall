@@ -7,9 +7,10 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.haikotlin.main.detail.PrevMatchDetailActivity
 import com.small.main.R
-import com.small.main.data.response.EventListResponse
-import com.small.main.data.response.EventResponse
+import com.small.main.data.remote.response.MatchListResponse
+import com.small.main.data.remote.response.MatchResponse
 import com.small.main.ui.adapter.EventAdapter
 import com.small.main.util.gone
 import com.small.main.util.visible
@@ -22,7 +23,7 @@ class PrevMatchFragment : Fragment(), PrevMatchView {
 
     private lateinit var prevMatchPresenter: PrevMatchPresenter
     private lateinit var adapter: EventAdapter
-    private val events: MutableList<EventResponse> = mutableListOf()
+    private val matches: MutableList<MatchResponse> = mutableListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
@@ -45,8 +46,8 @@ class PrevMatchFragment : Fragment(), PrevMatchView {
     }
 
     private fun initList() {
-        adapter = EventAdapter(events) {
-            startActivity<MatchDetailActivity>(
+        adapter = EventAdapter(matches) {
+            startActivity<PrevMatchDetailActivity>(
                     "MATCH_RESULT" to it
             )
         }
@@ -67,11 +68,11 @@ class PrevMatchFragment : Fragment(), PrevMatchView {
         pb_previous_match.gone()
     }
 
-    override fun showResultList(eventListResponse: EventListResponse) {
-        events.clear()
-        eventListResponse.events?.let {
-            for (i in eventListResponse.events.indices) {
-                events.add(eventListResponse.events[i])
+    override fun showResultList(matchListResponse: MatchListResponse) {
+        matches.clear()
+        matchListResponse.matches?.let {
+            for (i in matchListResponse.matches.indices) {
+                matches.add(matchListResponse.matches[i])
             }
         }
         adapter.notifyDataSetChanged()

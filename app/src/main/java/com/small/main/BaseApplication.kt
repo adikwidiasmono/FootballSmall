@@ -1,14 +1,18 @@
 package com.small.main
 
 import android.app.Application
+import android.arch.persistence.room.Room
 import android.support.v7.app.AppCompatDelegate
 import com.google.gson.GsonBuilder
-import com.small.main.data.repository.EventRepository
-import com.small.main.data.repository.EventRepositoryImpl
-import com.small.main.data.service.ApiService
+import com.small.main.data.local.dao.MatchDao
+import com.small.main.data.local.database.AppDatabase
+import com.small.main.data.remote.repository.EventRepository
+import com.small.main.data.remote.repository.EventRepositoryImpl
+import com.small.main.data.remote.service.ApiService
 import com.small.main.ui.previousmatch.PrevMatchPresenter
 import com.small.main.ui.nextmatch.NextMatchPresenter
 import com.small.main.ui.favoritematch.FavoriteMatchPresenter
+import com.small.main.ui.previousmatch.detail.PrevMatchDetailPresenter
 import com.small.main.util.CoroutinesContextProvider
 import okhttp3.OkHttpClient
 import org.koin.android.ext.android.startKoin
@@ -35,10 +39,17 @@ class BaseApplication : Application() {
         single<EventRepository> { EventRepositoryImpl(get()) }
         single { CoroutinesContextProvider() }
 
+        // Single instance of Database
+        single {
+            Room.databaseBuilder(get(), AppDatabase::class.java,
+                    "football-db").build()
+        }
+
         // Simple Presenter Factory
         factory { PrevMatchPresenter(get(), get()) }
         factory { NextMatchPresenter(get(), get()) }
         factory { FavoriteMatchPresenter(get(), get()) }
+        factory { PrevMatchDetailPresenter(get(), get()) }
     }
 
     override fun onCreate() {

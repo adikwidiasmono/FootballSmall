@@ -72,8 +72,10 @@ dependencies {
 
     // Local DB (Room framework)
     implementation "android.arch.persistence.room:runtime:$room_version"
+    kapt "android.arch.persistence.room:compiler:$room_version"
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
-    // use kapt for Kotlin
+    androidTestImplementation "android.arch.persistence.room:testing:$room_version"
+    androidTestImplementation "android.arch.core:core-testing:$room_version"
 
     // Testing
     testImplementation 'junit:junit:4.12'

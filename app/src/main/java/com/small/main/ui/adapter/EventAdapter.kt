@@ -5,21 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.small.main.R
-import com.small.main.data.response.EventResponse
-import com.small.main.util.CommonUtils
+import com.small.main.data.remote.response.MatchResponse
 import kotlinx.android.synthetic.main.item_event.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class EventAdapter(private val events: List<EventResponse>,
-                   private val listener: (EventResponse) -> Unit)
+class EventAdapter(private val matches: List<MatchResponse>,
+                   private val listener: (MatchResponse) -> Unit)
     : RecyclerView.Adapter<MatchViewHolder>() {
 
     override fun onBindViewHolder(holder: MatchViewHolder, position: Int) {
-        holder.bindItem(events[position])
+        holder.bindItem(matches[position])
     }
 
-    override fun getItemCount() = events.size
+    override fun getItemCount() = matches.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchViewHolder =
             MatchViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_event, parent, false))
@@ -28,8 +27,8 @@ class EventAdapter(private val events: List<EventResponse>,
 
 class MatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun bindItem(item: EventResponse) {
-        fun bindItem(items: EventResponse, listener: (EventResponse) -> Unit) {
+    fun bindItem(item: MatchResponse) {
+        fun bindItem(items: MatchResponse, listener: (MatchResponse) -> Unit) {
 
             if (items.intHomeScore == null || items.intAwayScore == null) {
                 itemView.tv_home_team_score.visibility = View.INVISIBLE

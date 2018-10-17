@@ -1,12 +1,12 @@
 package com.small.main.ui.previousmatch
 
-import com.small.main.data.response.EventListResponse
+import com.small.main.data.remote.response.MatchListResponse
 
 interface PrevMatchView {
 
     fun showLoading()
     fun hideLoading()
-    fun showResultList(eventListResponse: EventListResponse)
+    fun showResultList(matchListResponse: MatchListResponse)
     fun showError()
 
 }

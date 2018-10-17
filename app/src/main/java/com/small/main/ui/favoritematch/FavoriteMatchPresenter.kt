@@ -1,6 +1,6 @@
 package com.small.main.ui.favoritematch
 
-import com.small.main.data.repository.EventRepository
+import com.small.main.data.remote.repository.EventRepository
 import com.small.main.util.CoroutinesContextProvider
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.withContext

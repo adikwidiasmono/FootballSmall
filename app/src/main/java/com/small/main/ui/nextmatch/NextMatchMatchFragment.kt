@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.small.main.R
-import com.small.main.data.response.EventListResponse
-import com.small.main.data.response.EventResponse
+import com.small.main.data.remote.response.MatchListResponse
+import com.small.main.data.remote.response.MatchResponse
 import com.small.main.ui.adapter.EventAdapter
 import com.small.main.util.*
 import kotlinx.android.synthetic.main.fragment_next_match.*
@@ -19,7 +19,7 @@ class NextMatchMatchFragment : Fragment(), NextMatchView {
 
     private lateinit var nextMatchPresenter: NextMatchPresenter
     private lateinit var adapter: EventAdapter
-    private val events: MutableList<EventResponse> = mutableListOf()
+    private val matches: MutableList<MatchResponse> = mutableListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
@@ -34,7 +34,7 @@ class NextMatchMatchFragment : Fragment(), NextMatchView {
     }
 
     private fun initList() {
-        adapter = EventAdapter(events)
+        adapter = EventAdapter(matches)
         rv_next_match.layoutManager = LinearLayoutManager(activity)
         rv_next_match.adapter = this.adapter
     }
@@ -52,11 +52,11 @@ class NextMatchMatchFragment : Fragment(), NextMatchView {
         pb_next.gone()
     }
 
-    override fun showResultList(eventListResponse: EventListResponse) {
-        events.clear()
-        eventListResponse.events?.let {
-            for (i in eventListResponse.events.indices) {
-                events.add(eventListResponse.events[i])
+    override fun showResultList(matchListResponse: MatchListResponse) {
+        matches.clear()
+        matchListResponse.matches?.let {
+            for (i in matchListResponse.matches.indices) {
+                matches.add(matchListResponse.matches[i])
             }
         }
         adapter.notifyDataSetChanged()

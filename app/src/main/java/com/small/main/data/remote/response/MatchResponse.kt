@@ -1,10 +1,10 @@
-package com.small.main.data.response
+package com.small.main.data.remote.response
 
 import android.os.Parcel
 import android.os.Parcelable
 import java.util.*
 
-data class EventResponse(
+data class MatchResponse(
         var idEvent: Int?,
         var idSoccerXML: Int?,
         var strEvent: String?,
@@ -168,12 +168,12 @@ data class EventResponse(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<EventResponse> {
-        override fun createFromParcel(parcel: Parcel): EventResponse {
-            return EventResponse(parcel)
+    companion object CREATOR : Parcelable.Creator<MatchResponse> {
+        override fun createFromParcel(parcel: Parcel): MatchResponse {
+            return MatchResponse(parcel)
         }
 
-        override fun newArray(size: Int): Array<EventResponse?> {
+        override fun newArray(size: Int): Array<MatchResponse?> {
             return arrayOfNulls(size)
         }
     }
