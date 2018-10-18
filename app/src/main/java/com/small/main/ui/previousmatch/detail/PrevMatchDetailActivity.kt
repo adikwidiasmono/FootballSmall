@@ -9,11 +9,9 @@ import android.view.MenuItem
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.small.main.R
-import com.small.main.data.remote.response.MatchResponse
-import com.small.main.ui.previousmatch.PrevMatchPresenter
+import com.small.main.data.local.entity.MatchEntity
 import com.small.main.ui.previousmatch.detail.PrevMatchDetailPresenter
 import com.small.main.ui.previousmatch.detail.PrevMatchDetailView
-import com.small.main.util.ParseUtils
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_prev_match_detail.*
 import org.jetbrains.anko.db.SelectQueryBuilder
@@ -30,8 +28,7 @@ class PrevMatchDetailActivity : AppCompatActivity(), PrevMatchDetailView {
     private var menuItem: Menu? = null
     private var isFavorite: Boolean = false
 
-    private lateinit var matchItem: MatchResponse
-    private lateinit var idEvent: String
+    private lateinit var matchItem: MatchEntity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +42,7 @@ class PrevMatchDetailActivity : AppCompatActivity(), PrevMatchDetailView {
         supportActionBar?.setDisplayHomeAsUpEnabled(true);
         supportActionBar?.setDisplayShowHomeEnabled(true);
 
-        matchItem = intent.getSerializableExtra("MATCH_RESULT") as MatchResponse
+        matchItem = intent.getSerializableExtra("MATCH_RESULT") as MatchEntity
         matchItem?.let {
             val matchDate = SimpleDateFormat("dd/MM/yy HH:mm:ss+HH:mm", Locale.ENGLISH)
                     .parse(it.strDate + " " + it.strTime)
@@ -97,7 +94,7 @@ class PrevMatchDetailActivity : AppCompatActivity(), PrevMatchDetailView {
             it.idHomeTeam?.let { getHomeLogo(it.toString()) }
             it.idAwayTeam?.let { getAwayLogo(it.toString()) }
 
-            favoriteState()
+            prevMatchDetailPresenter.checkFavoriteState(it)
         }
     }
 
@@ -109,7 +106,6 @@ class PrevMatchDetailActivity : AppCompatActivity(), PrevMatchDetailView {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.detail_menu, menu)
         menuItem = menu
-        setFavorite()
         return true
     }
 
@@ -135,50 +131,41 @@ class PrevMatchDetailActivity : AppCompatActivity(), PrevMatchDetailView {
         return true
     }
 
-    private fun favoriteState() {
-        database.use {
-            lateinit var result: SelectQueryBuilder
-            if (matchItem.table_id != null)
-                result = select(DBORMUtils.getTableName(FootballMatchItem()))
-                        .whereArgs("(" + DBORMUtils.DEF_TABLE_ID_NAME + " = ${matchItem.table_id})")
-            else
-                result = select(DBORMUtils.getTableName(FootballMatchItem()))
-                        .whereArgs("(idEvent = ${matchItem.idEvent})")
+    override fun onSuccessGetFavoriteState(isFavorite: Boolean) {
+        this.isFavorite = isFavorite
+        setFavorite()
+    }
 
-            val favorite = result.parseList(classParser<FootballMatchItem>())
-
-            if (!favorite.isEmpty()) isFavorite = true
-        }
+    override fun onErrorGetFavoriteState(e: Throwable) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun addToFavorite() {
         matchItem?.let {
-            prevMatchDetailPresenter.addMatchToFavorite(ParseUtils.matchResponseToEntity(it))
+            prevMatchDetailPresenter.addMatchToFavorite(it)
         }
     }
 
-    override fun showSuccessInsert(id: Long) {
+    override fun onSuccessAddFavorite(id: Long) {
         snackbar(ll_match_detail, "Added to favorite").show()
     }
 
-    override fun showErrorInsert() {
+    override fun onErrorAddFavorite(e: Throwable) {
         snackbar(ll_match_detail, "Failed add to favorite").show()
     }
 
     private fun removeFromFavorite() {
         matchItem?.let {
-            if (it.table_id != null) {
-                if (DBORMUtils.deleteFromTableById(database, it, it.table_id) < 1)
-                    snackbar(ll_match_detail, "Failed remove from favorite").show()
-                else
-                    snackbar(ll_match_detail, "Removed from favorite").show()
-            } else {
-                if (DBORMUtils.deleteFromTableWhere(database, it, "(idEvent = ${it.idEvent})") < 1)
-                    snackbar(ll_match_detail, "Failed remove from favorite").show()
-                else
-                    snackbar(ll_match_detail, "Removed from favorite").show()
-            }
+            prevMatchDetailPresenter.removeMatchToFavorite(it)
         }
+    }
+
+    override fun onSuccessRemoveFavorite(deleted: Int) {
+        snackbar(ll_match_detail, "Removed from favorite").show()
+    }
+
+    override fun onErrorRemoveFavorite(e: Throwable) {
+        snackbar(ll_match_detail, "Failed remove from favorite").show()
     }
 
     private fun setFavorite() {
@@ -244,14 +231,6 @@ class PrevMatchDetailActivity : AppCompatActivity(), PrevMatchDetailView {
                                     }
                                 }
                         )
-    }
-
-    override fun showSuccess() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun showError() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 }

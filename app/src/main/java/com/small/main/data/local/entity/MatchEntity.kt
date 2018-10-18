@@ -7,12 +7,12 @@ import java.util.*
 
 @Entity(tableName = "match_entity")
 data class MatchEntity(
-        var idEvent: Int?,
-        var idSoccerXML: Int?,
+        var idEvent: Int,
+        var idSoccerXML: Int,
         var strEvent: String?,
         var strFilename: String?,
         var strSport: String?,
-        var idLeague: Int?,
+        var idLeague: Int,
         var strLeague: String?,
         var strSeason: String?,
         var strDescriptionEN: String?,
@@ -46,8 +46,8 @@ data class MatchEntity(
         var strDate: String?,
         var strTime: String?,
         var strTVStation: String?,
-        var idHomeTeam: Int?,
-        var idAwayTeam: Int?,
+        var idHomeTeam: Int,
+        var idAwayTeam: Int,
         var strResult: String?,
         var strCircuit: String?,
         var strCountry: String?,

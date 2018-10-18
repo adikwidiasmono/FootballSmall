@@ -4,14 +4,13 @@ import android.app.Application
 import android.arch.persistence.room.Room
 import android.support.v7.app.AppCompatDelegate
 import com.google.gson.GsonBuilder
-import com.small.main.data.local.dao.MatchDao
 import com.small.main.data.local.database.AppDatabase
 import com.small.main.data.remote.repository.EventRepository
 import com.small.main.data.remote.repository.EventRepositoryImpl
 import com.small.main.data.remote.service.ApiService
-import com.small.main.ui.previousmatch.PrevMatchPresenter
-import com.small.main.ui.nextmatch.NextMatchPresenter
 import com.small.main.ui.favoritematch.FavoriteMatchPresenter
+import com.small.main.ui.nextmatch.NextMatchPresenter
+import com.small.main.ui.previousmatch.PrevMatchPresenter
 import com.small.main.ui.previousmatch.detail.PrevMatchDetailPresenter
 import com.small.main.util.CoroutinesContextProvider
 import okhttp3.OkHttpClient
@@ -49,7 +48,7 @@ class BaseApplication : Application() {
         factory { PrevMatchPresenter(get(), get()) }
         factory { NextMatchPresenter(get(), get()) }
         factory { FavoriteMatchPresenter(get(), get()) }
-        factory { PrevMatchDetailPresenter(get(), get()) }
+        factory { PrevMatchDetailPresenter(get(), get(), get()) }
     }
 
     override fun onCreate() {

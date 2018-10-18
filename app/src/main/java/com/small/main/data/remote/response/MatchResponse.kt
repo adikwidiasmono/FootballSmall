@@ -5,12 +5,12 @@ import android.os.Parcelable
 import java.util.*
 
 data class MatchResponse(
-        var idEvent: Int?,
-        var idSoccerXML: Int?,
+        var idEvent: Int,
+        var idSoccerXML: Int,
         var strEvent: String?,
         var strFilename: String?,
         var strSport: String?,
-        var idLeague: Int?,
+        var idLeague: Int,
         var strLeague: String?,
         var strSeason: String?,
         var strDescriptionEN: String?,
@@ -44,8 +44,8 @@ data class MatchResponse(
         var strDate: String?,
         var strTime: String?,
         var strTVStation: String?,
-        var idHomeTeam: Int?,
-        var idAwayTeam: Int?,
+        var idHomeTeam: Int,
+        var idAwayTeam: Int,
         var strResult: String?,
         var strCircuit: String?,
         var strCountry: String?,
@@ -58,12 +58,12 @@ data class MatchResponse(
         var strLocked: String?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
-            parcel.readValue(Int::class.java.classLoader) as? Int,
-            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readValue(Int::class.java.classLoader) as Int,
+            parcel.readValue(Int::class.java.classLoader) as Int,
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
-            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readValue(Int::class.java.classLoader) as Int,
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
@@ -97,8 +97,8 @@ data class MatchResponse(
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
-            parcel.readValue(Int::class.java.classLoader) as? Int,
-            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readValue(Int::class.java.classLoader) as Int,
+            parcel.readValue(Int::class.java.classLoader) as Int,
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),

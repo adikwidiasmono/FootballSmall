@@ -12,6 +12,7 @@ import com.small.main.R
 import com.small.main.data.remote.response.MatchListResponse
 import com.small.main.data.remote.response.MatchResponse
 import com.small.main.ui.adapter.EventAdapter
+import com.small.main.util.ParseUtils
 import com.small.main.util.gone
 import com.small.main.util.visible
 import kotlinx.android.synthetic.main.fragment_previous_match.*
@@ -48,7 +49,7 @@ class PrevMatchFragment : Fragment(), PrevMatchView {
     private fun initList() {
         adapter = EventAdapter(matches) {
             startActivity<PrevMatchDetailActivity>(
-                    "MATCH_RESULT" to it
+                    "MATCH_RESULT" to ParseUtils.matchResponseToEntity(it)
             )
         }
         rv_previous_match.layoutManager = LinearLayoutManager(activity)
