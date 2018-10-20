@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.small.main.R
 import com.small.main.ui.favoritematch.FavoriteMatchFragment
-import com.small.main.ui.nextmatch.NextMatchMatchFragment
+import com.small.main.ui.nextmatch.NextMatchFragment
 import com.small.main.ui.previousmatch.PrevMatchFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
                     loadFragment(savedInstanceState, PrevMatchFragment(), getString(R.string.prev_match))
                 }
                 R.id.it_next_match -> {
-                    loadFragment(savedInstanceState, NextMatchMatchFragment(), getString(R.string.next_match))
+                    loadFragment(savedInstanceState, NextMatchFragment(), getString(R.string.next_match))
                 }
                 R.id.it_favorites -> {
                     loadFragment(savedInstanceState, FavoriteMatchFragment(), getString(R.string.favorites))

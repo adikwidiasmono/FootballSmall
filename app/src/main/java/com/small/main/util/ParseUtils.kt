@@ -64,5 +64,61 @@ class ParseUtils {
                     matchResponse.strLocked
             )
         }
+
+        fun matchEntityToResponse(matchEntity: MatchEntity): MatchResponse {
+            return MatchResponse(
+                    matchEntity.idEvent,
+                    matchEntity.idSoccerXML,
+                    matchEntity.strEvent,
+                    matchEntity.strFilename,
+                    matchEntity.strSport,
+                    matchEntity.idLeague,
+                    matchEntity.strLeague,
+                    matchEntity.strSeason,
+                    matchEntity.strDescriptionEN,
+                    matchEntity.strHomeTeam,
+                    matchEntity.strAwayTeam,
+                    matchEntity.intHomeScore,
+                    matchEntity.intRound,
+                    matchEntity.intAwayScore,
+                    matchEntity.intSpectators,
+                    matchEntity.strHomeGoalDetails,
+                    matchEntity.strHomeRedCards,
+                    matchEntity.strHomeYellowCards,
+                    matchEntity.strHomeLineupGoalkeeper,
+                    matchEntity.strHomeLineupDefense,
+                    matchEntity.strHomeLineupMidfield,
+                    matchEntity.strHomeLineupForward,
+                    matchEntity.strHomeLineupSubstitutes,
+                    matchEntity.strHomeFormation,
+                    matchEntity.strAwayRedCards,
+                    matchEntity.strAwayYellowCards,
+                    matchEntity.strAwayGoalDetails,
+                    matchEntity.strAwayLineupGoalkeeper,
+                    matchEntity.strAwayLineupDefense,
+                    matchEntity.strAwayLineupMidfield,
+                    matchEntity.strAwayLineupForward,
+                    matchEntity.strAwayLineupSubstitutes,
+                    matchEntity.strAwayFormation,
+                    matchEntity.intHomeShots,
+                    matchEntity.intAwayShots,
+                    matchEntity.dateEvent,
+                    matchEntity.strDate,
+                    matchEntity.strTime,
+                    matchEntity.strTVStation,
+                    matchEntity.idHomeTeam,
+                    matchEntity.idAwayTeam,
+                    matchEntity.strResult,
+                    matchEntity.strCircuit,
+                    matchEntity.strCountry,
+                    matchEntity.strCity,
+                    matchEntity.strPoster,
+                    matchEntity.strFanart,
+                    matchEntity.strThumb,
+                    matchEntity.strBanner,
+                    matchEntity.strMap,
+                    matchEntity.strLocked
+            )
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.small.main.ui.favoritematch
+package com.small.main.ui.nextmatch
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -9,36 +9,36 @@ import android.view.View
 import android.view.ViewGroup
 import com.haikotlin.main.detail.PrevMatchDetailActivity
 import com.small.main.R
-import com.small.main.data.local.entity.MatchEntity
+import com.small.main.data.remote.response.MatchListResponse
 import com.small.main.data.remote.response.MatchResponse
 import com.small.main.ui.adapter.EventAdapter
-import com.small.main.util.ParseUtils
-import com.small.main.util.gone
-import com.small.main.util.visible
-import kotlinx.android.synthetic.main.fragment_favorite_match.*
+import com.small.main.util.*
+import kotlinx.android.synthetic.main.fragment_next_match.*
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.startActivity
 import org.koin.android.ext.android.get
 
-class FavoriteMatchFragment : Fragment(), FavoriteMatchView {
+class NextMatchFragment : Fragment(), NextMatchView {
 
-    private lateinit var presenter: FavoriteMatchPresenter
+    private lateinit var presenter: NextMatchPresenter
     private lateinit var adapter: EventAdapter
     private val listData: MutableList<MatchResponse> = mutableListOf()
 
+    private val leagueId = 4328
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.fragment_favorite_match, container, false)
+            inflater.inflate(R.layout.fragment_next_match, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initList()
         presenter = get()
         presenter.attachView(this)
-        presenter.loadFavoriteMatch()
+        presenter.loadNextMatch(leagueId)
 
-        srl_favorite_match.onRefresh {
-            presenter.loadFavoriteMatch(false)
+        srl_next_match.onRefresh {
+            presenter.loadNextMatch(leagueId, false)
         }
     }
 
@@ -48,8 +48,8 @@ class FavoriteMatchFragment : Fragment(), FavoriteMatchView {
                     "MATCH_RESULT" to ParseUtils.matchResponseToEntity(it)
             )
         }
-        rv_favorite_match.layoutManager = LinearLayoutManager(activity)
-        rv_favorite_match.adapter = this.adapter
+        rv_next_match.layoutManager = LinearLayoutManager(activity)
+        rv_next_match.adapter = this.adapter
     }
 
     override fun onDestroyView() {
@@ -58,32 +58,35 @@ class FavoriteMatchFragment : Fragment(), FavoriteMatchView {
     }
 
     override fun showLoading() {
-        pb_favorite_match.visible()
+        pb_next_match.visible()
     }
 
     override fun hideLoading() {
-        pb_favorite_match.gone()
+        pb_next_match.gone()
+        srl_next_match.isRefreshing = false
     }
 
-    override fun showResultList(listMatchEntity: List<MatchEntity>) {
+    override fun showResultList(matchListResponse: MatchListResponse) {
         listData.clear()
-        for (i in listMatchEntity.indices) {
-            listData.add(ParseUtils.matchEntityToResponse(listMatchEntity[i]))
+        matchListResponse.events?.let {
+            for (i in matchListResponse.events.indices) {
+                listData.add(matchListResponse.events[i])
+            }
         }
         adapter.notifyDataSetChanged()
 
-        srl_favorite_match.isRefreshing = false
+        srl_next_match.isRefreshing = false
     }
 
     override fun showError() {
         val snbar = Snackbar.make(
-                rl_favorite_match,
+                rl_next_match,
                 getString(R.string.err_get_remote_data),
                 Snackbar.LENGTH_LONG
         );
         snbar.setAction("RELOAD",
                 {
-                    presenter.loadFavoriteMatch()
+                    presenter.loadNextMatch(leagueId)
                     snbar.dismiss()
                 }
         )

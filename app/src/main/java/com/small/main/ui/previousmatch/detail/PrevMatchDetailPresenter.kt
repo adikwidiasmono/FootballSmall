@@ -1,14 +1,17 @@
 package com.small.main.ui.previousmatch.detail
 
-import android.arch.lifecycle.LiveData
+import android.app.Activity
+import android.util.Log
 import android.widget.ImageView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.small.main.R
 import com.small.main.data.local.database.AppDatabase
 import com.small.main.data.local.entity.MatchEntity
 import com.small.main.data.remote.repository.EventRepository
 import com.small.main.util.CoroutinesContextProvider
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.withContext
-import retrofit2.HttpException
 import ru.gildor.coroutines.retrofit.await
 
 class PrevMatchDetailPresenter(private val eventRepository: EventRepository,
@@ -26,14 +29,12 @@ class PrevMatchDetailPresenter(private val eventRepository: EventRepository,
     }
 
     fun checkFavoriteState(matchEntity: MatchEntity) {
+        Log.e("FAV MATCH", "=>" + matchEntity.toString())
         launch(contextProvider.main) {
             val data = withContext(contextProvider.io) {
-                lateinit var liveData: LiveData<MatchEntity>
-                if (matchEntity.id != null) {
-                    liveData = appDatabase.matchDao().get(matchEntity.id)
-                } else {
-                    liveData = appDatabase.matchDao().getByIdEvent(matchEntity.idEvent ?: 0)
-                }
+                val liveData = appDatabase.matchDao().getByIdEvent(matchEntity.idEvent)
+                Log.e("FAV MATCH", "=>" + liveData.toString())
+                Log.e("FAV MATCH", "=>" + liveData.value.toString())
                 liveData.value != null
             }
             try {
@@ -76,51 +77,24 @@ class PrevMatchDetailPresenter(private val eventRepository: EventRepository,
         }
     }
 
-    private fun setHomeLogo(teamId: Int, imageView: ImageView) {
+    fun setTeamLogo(activity: Activity, teamId: Int, imageView: ImageView) {
         launch(contextProvider.main) {
             val data = withContext(contextProvider.io) { eventRepository.lookupTeam(teamId) }
             try {
-                prevMatchView?.showResultList(data.await())
-
-                Glide.with(this)
-                        .load(result?.teams?.get(0)?.strTeamBadge)
+                Glide.with(activity)
+                        .load(data.await()?.teams?.get(0)?.strTeamBadge)
                         .apply(RequestOptions()
                                 .placeholder(R.drawable.ic_image_def_128dp)
                                 .error(R.drawable.ic_image_err_128dp)
                         )
-                        .into(iv_home_logo)
+                        .into(imageView)
             } catch (e: Throwable) {
-                prevMatchView?.showError()
-                prevMatchView?.hideLoading()
+                Glide.with(activity)
+                        .load(R.drawable.ic_image_err_128dp)
+                        .into(imageView)
+                Log.e("FAILED IMG", "Home clud logo : " + e.localizedMessage)
             }
         }
-
-
-        disposableHome =
-                footballApiService.lookupTeam(idTeam)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                { result ->
-                                    run {
-                                        Glide.with(this)
-                                                .load(result?.teams?.get(0)?.strTeamBadge)
-                                                .apply(RequestOptions()
-                                                        .placeholder(R.drawable.ic_image_def_128dp)
-                                                        .error(R.drawable.ic_image_err_128dp)
-                                                )
-                                                .into(iv_home_logo)
-                                    }
-                                },
-                                { error ->
-                                    run {
-                                        Glide.with(this)
-                                                .load(R.drawable.ic_image_err_128dp)
-                                                .into(iv_home_logo)
-                                        Log.e("FAILED IMG", "Home clud logo : " + error.localizedMessage)
-                                    }
-                                }
-                        )
     }
 
 }

@@ -12,8 +12,8 @@ class PrevMatchPresenter(private val eventRepository: EventRepository,
 
     private var prevMatchView: PrevMatchView? = null
 
-    fun attachView(prevMatchMatchView: PrevMatchView) {
-        this.prevMatchView = prevMatchMatchView
+    fun attachView(prevMatchView: PrevMatchView) {
+        this.prevMatchView = prevMatchView
     }
 
     fun detachView() {
@@ -21,18 +21,27 @@ class PrevMatchPresenter(private val eventRepository: EventRepository,
     }
 
     fun loadLastMatch(leagueId: Int) {
-        prevMatchView?.showLoading()
+        loadLastMatch(leagueId, true)
+    }
+
+    fun loadLastMatch(leagueId: Int, showLoading: Boolean) {
+        if (showLoading)
+            prevMatchView?.showLoading()
+
         launch(contextProvider.main) {
             val data = withContext(contextProvider.io) { eventRepository.loadLastMatch(leagueId) }
             try {
                 prevMatchView?.showResultList(data.await())
-                prevMatchView?.hideLoading()
+                if (showLoading)
+                    prevMatchView?.hideLoading()
             } catch (e: HttpException) {
                 prevMatchView?.showError()
-                prevMatchView?.hideLoading()
+                if (showLoading)
+                    prevMatchView?.hideLoading()
             } catch (e: Throwable) {
                 prevMatchView?.showError()
-                prevMatchView?.hideLoading()
+                if (showLoading)
+                    prevMatchView?.hideLoading()
             }
         }
     }

@@ -6,16 +6,11 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.small.main.R
 import com.small.main.data.local.entity.MatchEntity
 import com.small.main.ui.previousmatch.detail.PrevMatchDetailPresenter
 import com.small.main.ui.previousmatch.detail.PrevMatchDetailView
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_prev_match_detail.*
-import org.jetbrains.anko.db.SelectQueryBuilder
-import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.design.snackbar
 import org.koin.android.ext.android.get
 import java.text.SimpleDateFormat
@@ -23,7 +18,7 @@ import java.util.*
 
 class PrevMatchDetailActivity : AppCompatActivity(), PrevMatchDetailView {
 
-    private lateinit var prevMatchDetailPresenter: PrevMatchDetailPresenter
+    private lateinit var presenter: PrevMatchDetailPresenter
 
     private var menuItem: Menu? = null
     private var isFavorite: Boolean = false
@@ -34,8 +29,8 @@ class PrevMatchDetailActivity : AppCompatActivity(), PrevMatchDetailView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_prev_match_detail)
 
-        prevMatchDetailPresenter = get()
-        prevMatchDetailPresenter.attachView(this)
+        presenter = get()
+        presenter.attachView(this)
 
         toolbar.title = "Match Detail"
         setSupportActionBar(toolbar)
@@ -91,16 +86,16 @@ class PrevMatchDetailActivity : AppCompatActivity(), PrevMatchDetailView {
             tv_home_subtitutes.text = it.strHomeLineupSubstitutes ?: "-"
             tv_away_subtitutes.text = it.strAwayLineupSubstitutes ?: "-"
 
-            it.idHomeTeam?.let { getHomeLogo(it.toString()) }
-            it.idAwayTeam?.let { getAwayLogo(it.toString()) }
+            it.idHomeTeam?.let { presenter.setTeamLogo(this, it, iv_home_logo) }
+            it.idAwayTeam?.let { presenter.setTeamLogo(this, it, iv_away_logo) }
 
-            prevMatchDetailPresenter.checkFavoriteState(it)
+            presenter.checkFavoriteState(it)
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        prevMatchDetailPresenter.detachView()
+        presenter.detachView()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -132,17 +127,19 @@ class PrevMatchDetailActivity : AppCompatActivity(), PrevMatchDetailView {
     }
 
     override fun onSuccessGetFavoriteState(isFavorite: Boolean) {
+        Log.e("IS FAVORITE", "=>" + isFavorite)
         this.isFavorite = isFavorite
         setFavorite()
     }
 
     override fun onErrorGetFavoriteState(e: Throwable) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.e("ERR GET FAV STATE", "=>" + e.localizedMessage)
     }
 
     private fun addToFavorite() {
         matchItem?.let {
-            prevMatchDetailPresenter.addMatchToFavorite(it)
+            presenter.addMatchToFavorite(it)
         }
     }
 
@@ -156,7 +153,7 @@ class PrevMatchDetailActivity : AppCompatActivity(), PrevMatchDetailView {
 
     private fun removeFromFavorite() {
         matchItem?.let {
-            prevMatchDetailPresenter.removeMatchToFavorite(it)
+            presenter.removeMatchToFavorite(it)
         }
     }
 
@@ -173,64 +170,6 @@ class PrevMatchDetailActivity : AppCompatActivity(), PrevMatchDetailView {
             menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_added_to_favorites)
         else
             menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_add_to_favorites)
-    }
-
-    private fun getHomeLogo(idTeam: String) {
-        // Get data here
-        disposableHome =
-                footballApiService.lookupTeam(idTeam)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                { result ->
-                                    run {
-                                        Glide.with(this)
-                                                .load(result?.teams?.get(0)?.strTeamBadge)
-                                                .apply(RequestOptions()
-                                                        .placeholder(R.drawable.ic_image_def_128dp)
-                                                        .error(R.drawable.ic_image_err_128dp)
-                                                )
-                                                .into(iv_home_logo)
-                                    }
-                                },
-                                { error ->
-                                    run {
-                                        Glide.with(this)
-                                                .load(R.drawable.ic_image_err_128dp)
-                                                .into(iv_home_logo)
-                                        Log.e("FAILED IMG", "Home clud logo : " + error.localizedMessage)
-                                    }
-                                }
-                        )
-    }
-
-    private fun getAwayLogo(idTeam: String) {
-        // Get data here
-        disposableAway =
-                footballApiService.lookupTeam(idTeam)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                { result ->
-                                    run {
-                                        Glide.with(this)
-                                                .load(result?.teams?.get(0)?.strTeamBadge)
-                                                .apply(RequestOptions()
-                                                        .placeholder(R.drawable.ic_image_def_128dp)
-                                                        .error(R.drawable.ic_image_err_128dp)
-                                                )
-                                                .into(iv_away_logo)
-                                    }
-                                },
-                                { error ->
-                                    run {
-                                        Glide.with(this)
-                                                .load(R.drawable.ic_image_err_128dp)
-                                                .into(iv_away_logo)
-                                        Log.e("FAILED IMG", "Away clud logo : " + error.localizedMessage)
-                                    }
-                                }
-                        )
     }
 
 }

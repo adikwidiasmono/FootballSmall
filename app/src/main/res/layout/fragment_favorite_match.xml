@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rl_previous_match"
+    android:id="@+id/rl_favorite_match"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.previousmatch.PrevMatchFragment">
+    tools:context=".ui.favoritematch.FavoriteMatchFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/srl_previous_match"
+        android:id="@+id/srl_favorite_match"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_previous_match"
+            android:id="@+id/rv_favorite_match"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <ProgressBar
-        android:id="@+id/pb_previous_match"
+        android:id="@+id/pb_favorite_match"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />

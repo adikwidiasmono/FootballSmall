@@ -47,7 +47,7 @@ class BaseApplication : Application() {
         // Simple Presenter Factory
         factory { PrevMatchPresenter(get(), get()) }
         factory { NextMatchPresenter(get(), get()) }
-        factory { FavoriteMatchPresenter(get(), get()) }
+        factory { FavoriteMatchPresenter(get(), get(), get()) }
         factory { PrevMatchDetailPresenter(get(), get(), get()) }
     }
 

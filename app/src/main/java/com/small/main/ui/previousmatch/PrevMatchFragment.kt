@@ -22,9 +22,11 @@ import org.koin.android.ext.android.get
 
 class PrevMatchFragment : Fragment(), PrevMatchView {
 
-    private lateinit var prevMatchPresenter: PrevMatchPresenter
+    private lateinit var presenter: PrevMatchPresenter
     private lateinit var adapter: EventAdapter
-    private val matches: MutableList<MatchResponse> = mutableListOf()
+    private val listData: MutableList<MatchResponse> = mutableListOf()
+
+    private val leagueId = 4328
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
@@ -33,21 +35,17 @@ class PrevMatchFragment : Fragment(), PrevMatchView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initList()
-        prevMatchPresenter = get()
-        prevMatchPresenter.attachView(this)
-        getData()
+        presenter = get()
+        presenter.attachView(this)
+        presenter.loadLastMatch(leagueId)
 
         srl_previous_match.onRefresh {
-            getData()
+            presenter.loadLastMatch(leagueId, false)
         }
     }
 
-    private fun getData() {
-        prevMatchPresenter.loadLastMatch(4328)
-    }
-
     private fun initList() {
-        adapter = EventAdapter(matches) {
+        adapter = EventAdapter(listData) {
             startActivity<PrevMatchDetailActivity>(
                     "MATCH_RESULT" to ParseUtils.matchResponseToEntity(it)
             )
@@ -58,7 +56,7 @@ class PrevMatchFragment : Fragment(), PrevMatchView {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        prevMatchPresenter.detachView()
+        presenter.detachView()
     }
 
     override fun showLoading() {
@@ -67,15 +65,17 @@ class PrevMatchFragment : Fragment(), PrevMatchView {
 
     override fun hideLoading() {
         pb_previous_match.gone()
+        srl_previous_match.isRefreshing = false
     }
 
     override fun showResultList(matchListResponse: MatchListResponse) {
-        matches.clear()
-        matchListResponse.matches?.let {
-            for (i in matchListResponse.matches.indices) {
-                matches.add(matchListResponse.matches[i])
+        listData.clear()
+        matchListResponse.events?.let {
+            for (i in matchListResponse.events.indices) {
+                listData.add(matchListResponse.events[i])
             }
         }
+
         adapter.notifyDataSetChanged()
 
         srl_previous_match.isRefreshing = false
@@ -83,13 +83,13 @@ class PrevMatchFragment : Fragment(), PrevMatchView {
 
     override fun showError() {
         val snbar = Snackbar.make(
-                cl_previous_match,
+                rl_previous_match,
                 getString(R.string.err_get_remote_data),
-                Snackbar.LENGTH_INDEFINITE
+                Snackbar.LENGTH_LONG
         );
         snbar.setAction("RELOAD",
                 {
-                    getData()
+                    presenter.loadLastMatch(leagueId)
                     snbar.dismiss()
                 }
         )
