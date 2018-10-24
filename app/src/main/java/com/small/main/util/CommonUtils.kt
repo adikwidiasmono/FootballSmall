@@ -7,9 +7,10 @@ import java.util.*
 
 class CommonUtils {
     companion object {
+
         @SuppressLint("SimpleDateFormat")
-        fun getStringDate(startDate: Date): String? {
-            val writeFormat = SimpleDateFormat("EEE, dd MMM yyyy")
+        fun getStringLocalDate(startDate: Date): String? {
+            val writeFormat = SimpleDateFormat("EEE, dd MMM yyyy HH:mm", Locale("in", "ID"))
             var finalDate: String? = null
             try {
                 finalDate = writeFormat.format(startDate)
@@ -19,5 +20,6 @@ class CommonUtils {
 
             return finalDate
         }
+
     }
 }

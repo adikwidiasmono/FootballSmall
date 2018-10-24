@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.small.main.R
 import com.small.main.data.remote.response.MatchResponse
+import com.small.main.util.CommonUtils
 import kotlinx.android.synthetic.main.item_event.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -40,9 +41,7 @@ class MatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val matchDate = SimpleDateFormat("dd/MM/yy HH:mm:ssX", Locale.ENGLISH)
                 .parse(items.strDate + " " + items.strTime)
 
-        val matchDateFormatted = SimpleDateFormat("EEE, dd MMM yyyy HH:mm", Locale("in", "ID"))
-
-        itemView.tv_match_date.text = matchDateFormatted.format(matchDate)
+        itemView.tv_match_date.text = CommonUtils.getStringLocalDate(matchDate)
         val strs = items.strEvent?.split("vs")
         var homeTeam = strs?.get(0)?.trim() ?: "Unknown Team"
         var awayTeam = strs?.get(1)?.trim() ?: "Unknown Team"
