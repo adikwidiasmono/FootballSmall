@@ -1,16 +1,16 @@
-package com.small.main.data.response
+package com.small.main.data.remote.response
 
 import android.os.Parcel
 import android.os.Parcelable
 import java.util.*
 
-data class EventResponse(
-        var idEvent: Int?,
-        var idSoccerXML: Int?,
+data class MatchResponse(
+        var idEvent: Int,
+        var idSoccerXML: Int,
         var strEvent: String?,
         var strFilename: String?,
         var strSport: String?,
-        var idLeague: Int?,
+        var idLeague: Int,
         var strLeague: String?,
         var strSeason: String?,
         var strDescriptionEN: String?,
@@ -44,8 +44,8 @@ data class EventResponse(
         var strDate: String?,
         var strTime: String?,
         var strTVStation: String?,
-        var idHomeTeam: Int?,
-        var idAwayTeam: Int?,
+        var idHomeTeam: Int,
+        var idAwayTeam: Int,
         var strResult: String?,
         var strCircuit: String?,
         var strCountry: String?,
@@ -58,12 +58,12 @@ data class EventResponse(
         var strLocked: String?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
-            parcel.readValue(Int::class.java.classLoader) as? Int,
-            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readValue(Int::class.java.classLoader) as Int,
+            parcel.readValue(Int::class.java.classLoader) as Int,
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
-            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readValue(Int::class.java.classLoader) as Int,
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
@@ -97,8 +97,8 @@ data class EventResponse(
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
-            parcel.readValue(Int::class.java.classLoader) as? Int,
-            parcel.readValue(Int::class.java.classLoader) as? Int,
+            parcel.readValue(Int::class.java.classLoader) as Int,
+            parcel.readValue(Int::class.java.classLoader) as Int,
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
@@ -168,12 +168,12 @@ data class EventResponse(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<EventResponse> {
-        override fun createFromParcel(parcel: Parcel): EventResponse {
-            return EventResponse(parcel)
+    companion object CREATOR : Parcelable.Creator<MatchResponse> {
+        override fun createFromParcel(parcel: Parcel): MatchResponse {
+            return MatchResponse(parcel)
         }
 
-        override fun newArray(size: Int): Array<EventResponse?> {
+        override fun newArray(size: Int): Array<MatchResponse?> {
             return arrayOfNulls(size)
         }
     }

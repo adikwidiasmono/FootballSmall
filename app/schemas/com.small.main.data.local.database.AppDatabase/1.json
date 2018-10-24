@@ -1,0 +1,339 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "7cd49b120a687cefea0c3a8c99ffd804",
+    "entities": [
+      {
+        "tableName": "match_entity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `idEvent` INTEGER NOT NULL, `idSoccerXML` INTEGER NOT NULL, `strEvent` TEXT, `strFilename` TEXT, `strSport` TEXT, `idLeague` INTEGER NOT NULL, `strLeague` TEXT, `strSeason` TEXT, `strDescriptionEN` TEXT, `strHomeTeam` TEXT, `strAwayTeam` TEXT, `intHomeScore` INTEGER, `intRound` INTEGER, `intAwayScore` INTEGER, `intSpectators` INTEGER, `strHomeGoalDetails` TEXT, `strHomeRedCards` TEXT, `strHomeYellowCards` TEXT, `strHomeLineupGoalkeeper` TEXT, `strHomeLineupDefense` TEXT, `strHomeLineupMidfield` TEXT, `strHomeLineupForward` TEXT, `strHomeLineupSubstitutes` TEXT, `strHomeFormation` TEXT, `strAwayRedCards` TEXT, `strAwayYellowCards` TEXT, `strAwayGoalDetails` TEXT, `strAwayLineupGoalkeeper` TEXT, `strAwayLineupDefense` TEXT, `strAwayLineupMidfield` TEXT, `strAwayLineupForward` TEXT, `strAwayLineupSubstitutes` TEXT, `strAwayFormation` TEXT, `intHomeShots` INTEGER, `intAwayShots` INTEGER, `dateEvent` INTEGER, `strDate` TEXT, `strTime` TEXT, `strTVStation` TEXT, `idHomeTeam` INTEGER NOT NULL, `idAwayTeam` INTEGER NOT NULL, `strResult` TEXT, `strCircuit` TEXT, `strCountry` TEXT, `strCity` TEXT, `strPoster` TEXT, `strFanart` TEXT, `strThumb` TEXT, `strBanner` TEXT, `strMap` TEXT, `strLocked` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "idEvent",
+            "columnName": "idEvent",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "idSoccerXML",
+            "columnName": "idSoccerXML",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "strEvent",
+            "columnName": "strEvent",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strFilename",
+            "columnName": "strFilename",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strSport",
+            "columnName": "strSport",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idLeague",
+            "columnName": "idLeague",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "strLeague",
+            "columnName": "strLeague",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strSeason",
+            "columnName": "strSeason",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strDescriptionEN",
+            "columnName": "strDescriptionEN",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strHomeTeam",
+            "columnName": "strHomeTeam",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strAwayTeam",
+            "columnName": "strAwayTeam",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "intHomeScore",
+            "columnName": "intHomeScore",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "intRound",
+            "columnName": "intRound",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "intAwayScore",
+            "columnName": "intAwayScore",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "intSpectators",
+            "columnName": "intSpectators",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strHomeGoalDetails",
+            "columnName": "strHomeGoalDetails",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strHomeRedCards",
+            "columnName": "strHomeRedCards",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strHomeYellowCards",
+            "columnName": "strHomeYellowCards",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strHomeLineupGoalkeeper",
+            "columnName": "strHomeLineupGoalkeeper",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strHomeLineupDefense",
+            "columnName": "strHomeLineupDefense",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strHomeLineupMidfield",
+            "columnName": "strHomeLineupMidfield",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strHomeLineupForward",
+            "columnName": "strHomeLineupForward",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strHomeLineupSubstitutes",
+            "columnName": "strHomeLineupSubstitutes",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strHomeFormation",
+            "columnName": "strHomeFormation",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strAwayRedCards",
+            "columnName": "strAwayRedCards",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strAwayYellowCards",
+            "columnName": "strAwayYellowCards",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strAwayGoalDetails",
+            "columnName": "strAwayGoalDetails",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strAwayLineupGoalkeeper",
+            "columnName": "strAwayLineupGoalkeeper",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strAwayLineupDefense",
+            "columnName": "strAwayLineupDefense",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strAwayLineupMidfield",
+            "columnName": "strAwayLineupMidfield",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strAwayLineupForward",
+            "columnName": "strAwayLineupForward",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strAwayLineupSubstitutes",
+            "columnName": "strAwayLineupSubstitutes",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strAwayFormation",
+            "columnName": "strAwayFormation",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "intHomeShots",
+            "columnName": "intHomeShots",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "intAwayShots",
+            "columnName": "intAwayShots",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dateEvent",
+            "columnName": "dateEvent",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strDate",
+            "columnName": "strDate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strTime",
+            "columnName": "strTime",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strTVStation",
+            "columnName": "strTVStation",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idHomeTeam",
+            "columnName": "idHomeTeam",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "idAwayTeam",
+            "columnName": "idAwayTeam",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "strResult",
+            "columnName": "strResult",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strCircuit",
+            "columnName": "strCircuit",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strCountry",
+            "columnName": "strCountry",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strCity",
+            "columnName": "strCity",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strPoster",
+            "columnName": "strPoster",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strFanart",
+            "columnName": "strFanart",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strThumb",
+            "columnName": "strThumb",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strBanner",
+            "columnName": "strBanner",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strMap",
+            "columnName": "strMap",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "strLocked",
+            "columnName": "strLocked",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"7cd49b120a687cefea0c3a8c99ffd804\")"
+    ]
+  }
+}

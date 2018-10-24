@@ -13,6 +13,13 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "BASE_URL", "\"https://www.thesportsdb.com/api/v1/json/1/\""
+
+        // For ROOM Database versioning
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
     buildTypes {
         release {
@@ -72,8 +79,10 @@ dependencies {
 
     // Local DB (Room framework)
     implementation "android.arch.persistence.room:runtime:$room_version"
+    kapt "android.arch.persistence.room:compiler:$room_version"
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
-    // use kapt for Kotlin
+    androidTestImplementation "android.arch.persistence.room:testing:$room_version"
+    androidTestImplementation "android.arch.core:core-testing:$room_version"
 
     // Testing
     testImplementation 'junit:junit:4.12'
