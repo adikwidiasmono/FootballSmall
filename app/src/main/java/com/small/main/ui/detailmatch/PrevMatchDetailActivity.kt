@@ -8,8 +8,8 @@ import android.view.Menu
 import android.view.MenuItem
 import com.small.main.R
 import com.small.main.data.local.entity.MatchEntity
-import com.small.main.ui.previousmatch.detail.PrevMatchDetailPresenter
-import com.small.main.ui.previousmatch.detail.PrevMatchDetailView
+import com.small.main.ui.detailmatch.PrevMatchDetailPresenter
+import com.small.main.ui.detailmatch.PrevMatchDetailView
 import kotlinx.android.synthetic.main.activity_prev_match_detail.*
 import org.jetbrains.anko.design.snackbar
 import org.koin.android.ext.android.get

@@ -11,7 +11,7 @@ import com.small.main.data.remote.service.ApiService
 import com.small.main.ui.favoritematch.FavoriteMatchPresenter
 import com.small.main.ui.nextmatch.NextMatchPresenter
 import com.small.main.ui.previousmatch.PrevMatchPresenter
-import com.small.main.ui.previousmatch.detail.PrevMatchDetailPresenter
+import com.small.main.ui.detailmatch.PrevMatchDetailPresenter
 import com.small.main.util.CoroutinesContextProvider
 import okhttp3.OkHttpClient
 import org.koin.android.ext.android.startKoin

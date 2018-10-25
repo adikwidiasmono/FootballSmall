@@ -1,4 +1,4 @@
-package com.small.main.ui.previousmatch.detail
+package com.small.main.ui.detailmatch
 
 interface PrevMatchDetailView {
 

@@ -1,4 +1,4 @@
-package com.small.main.ui.previousmatch.detail
+package com.small.main.ui.detailmatch
 
 import android.app.Activity
 import android.util.Log
@@ -59,15 +59,7 @@ class PrevMatchDetailPresenter(private val eventRepository: EventRepository,
     fun removeMatchToFavorite(matchEntity: MatchEntity) {
         launch(contextProvider.main) {
             val data = withContext(contextProvider.io) {
-                if (matchEntity.id == null) {
-                    val entity = appDatabase.matchDao().getByIdEvent(matchEntity.idEvent).value
-                    if (entity != null)
-                        appDatabase.matchDao().delete(entity)
-                    else
-                        0
-                } else {
-                    appDatabase.matchDao().delete(matchEntity)
-                }
+                appDatabase.matchDao().delete(matchEntity)
             }
             try {
                 prevMatchDetailView?.onSuccessRemoveFavorite(data)
