@@ -17,7 +17,6 @@ class CommonUtils {
             } catch (e: ParseException) {
                 e.printStackTrace()
             }
-
             return finalDate
         }
 
