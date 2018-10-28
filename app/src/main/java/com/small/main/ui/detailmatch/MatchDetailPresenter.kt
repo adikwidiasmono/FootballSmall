@@ -14,33 +14,30 @@ import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.withContext
 import ru.gildor.coroutines.retrofit.await
 
-class PrevMatchDetailPresenter(private val eventRepository: EventRepository,
-                               private val appDatabase: AppDatabase,
-                               private val contextProvider: CoroutinesContextProvider) {
+class MatchDetailPresenter(private val eventRepository: EventRepository,
+                           private val appDatabase: AppDatabase,
+                           private val contextProvider: CoroutinesContextProvider) {
 
-    private var prevMatchDetailView: PrevMatchDetailView? = null
+    private var matchDetailView: MatchDetailView? = null
 
-    fun attachView(prevMatchDetailView: PrevMatchDetailView) {
-        this.prevMatchDetailView = prevMatchDetailView
+    fun attachView(matchDetailView: MatchDetailView) {
+        this.matchDetailView = matchDetailView
     }
 
     fun detachView() {
-        prevMatchDetailView = null
+        matchDetailView = null
     }
 
     fun checkFavoriteState(matchEntity: MatchEntity) {
-        Log.e("FAV MATCH", "=>" + matchEntity.toString())
         launch(contextProvider.main) {
             val data = withContext(contextProvider.io) {
-                val liveData = appDatabase.matchDao().getByIdEvent(matchEntity.idEvent)
-                Log.e("FAV MATCH", "=>" + liveData.toString())
-                Log.e("FAV MATCH", "=>" + liveData.value.toString())
-                liveData.value != null
+                val matchEntityResult = appDatabase.matchDao().getByIdEvent(matchEntity.idEvent)
+                matchEntityResult != null
             }
             try {
-                prevMatchDetailView?.onSuccessGetFavoriteState(data)
+                matchDetailView?.onSuccessGetFavoriteState(data)
             } catch (e: Throwable) {
-                prevMatchDetailView?.onErrorGetFavoriteState(e)
+                matchDetailView?.onErrorGetFavoriteState(e)
             }
         }
     }
@@ -49,9 +46,9 @@ class PrevMatchDetailPresenter(private val eventRepository: EventRepository,
         launch(contextProvider.main) {
             val data = withContext(contextProvider.io) { appDatabase.matchDao().insert(matchEntity) }
             try {
-                prevMatchDetailView?.onSuccessAddFavorite(data)
+                matchDetailView?.onSuccessAddFavorite(data)
             } catch (e: Throwable) {
-                prevMatchDetailView?.onErrorAddFavorite(e)
+                matchDetailView?.onErrorAddFavorite(e)
             }
         }
     }
@@ -59,12 +56,13 @@ class PrevMatchDetailPresenter(private val eventRepository: EventRepository,
     fun removeMatchToFavorite(matchEntity: MatchEntity) {
         launch(contextProvider.main) {
             val data = withContext(contextProvider.io) {
-                appDatabase.matchDao().delete(matchEntity)
+                val matchEntityResult = appDatabase.matchDao().getByIdEvent(matchEntity.idEvent)
+                appDatabase.matchDao().delete(matchEntityResult)
             }
             try {
-                prevMatchDetailView?.onSuccessRemoveFavorite(data)
+                matchDetailView?.onSuccessRemoveFavorite(data)
             } catch (e: Throwable) {
-                prevMatchDetailView?.onErrorRemoveFavorite(e)
+                matchDetailView?.onErrorRemoveFavorite(e)
             }
         }
     }

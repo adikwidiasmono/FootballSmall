@@ -1,6 +1,6 @@
 package com.small.main.ui.detailmatch
 
-interface PrevMatchDetailView {
+interface MatchDetailView {
 
     fun onSuccessAddFavorite(id: Long)
     fun onErrorAddFavorite(e: Throwable)

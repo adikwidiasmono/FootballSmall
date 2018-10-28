@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "7cd49b120a687cefea0c3a8c99ffd804",
+    "identityHash": "b110bf56ab8b6ab3dfa38c532718641c",
     "entities": [
       {
         "tableName": "match_entity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `idEvent` INTEGER NOT NULL, `idSoccerXML` INTEGER NOT NULL, `strEvent` TEXT, `strFilename` TEXT, `strSport` TEXT, `idLeague` INTEGER NOT NULL, `strLeague` TEXT, `strSeason` TEXT, `strDescriptionEN` TEXT, `strHomeTeam` TEXT, `strAwayTeam` TEXT, `intHomeScore` INTEGER, `intRound` INTEGER, `intAwayScore` INTEGER, `intSpectators` INTEGER, `strHomeGoalDetails` TEXT, `strHomeRedCards` TEXT, `strHomeYellowCards` TEXT, `strHomeLineupGoalkeeper` TEXT, `strHomeLineupDefense` TEXT, `strHomeLineupMidfield` TEXT, `strHomeLineupForward` TEXT, `strHomeLineupSubstitutes` TEXT, `strHomeFormation` TEXT, `strAwayRedCards` TEXT, `strAwayYellowCards` TEXT, `strAwayGoalDetails` TEXT, `strAwayLineupGoalkeeper` TEXT, `strAwayLineupDefense` TEXT, `strAwayLineupMidfield` TEXT, `strAwayLineupForward` TEXT, `strAwayLineupSubstitutes` TEXT, `strAwayFormation` TEXT, `intHomeShots` INTEGER, `intAwayShots` INTEGER, `dateEvent` INTEGER, `strDate` TEXT, `strTime` TEXT, `strTVStation` TEXT, `idHomeTeam` INTEGER NOT NULL, `idAwayTeam` INTEGER NOT NULL, `strResult` TEXT, `strCircuit` TEXT, `strCountry` TEXT, `strCity` TEXT, `strPoster` TEXT, `strFanart` TEXT, `strThumb` TEXT, `strBanner` TEXT, `strMap` TEXT, `strLocked` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `id_event` INTEGER NOT NULL, `idSoccerXML` INTEGER NOT NULL, `strEvent` TEXT, `strFilename` TEXT, `strSport` TEXT, `idLeague` INTEGER NOT NULL, `strLeague` TEXT, `strSeason` TEXT, `strDescriptionEN` TEXT, `strHomeTeam` TEXT, `strAwayTeam` TEXT, `intHomeScore` INTEGER, `intRound` INTEGER, `intAwayScore` INTEGER, `intSpectators` INTEGER, `strHomeGoalDetails` TEXT, `strHomeRedCards` TEXT, `strHomeYellowCards` TEXT, `strHomeLineupGoalkeeper` TEXT, `strHomeLineupDefense` TEXT, `strHomeLineupMidfield` TEXT, `strHomeLineupForward` TEXT, `strHomeLineupSubstitutes` TEXT, `strHomeFormation` TEXT, `strAwayRedCards` TEXT, `strAwayYellowCards` TEXT, `strAwayGoalDetails` TEXT, `strAwayLineupGoalkeeper` TEXT, `strAwayLineupDefense` TEXT, `strAwayLineupMidfield` TEXT, `strAwayLineupForward` TEXT, `strAwayLineupSubstitutes` TEXT, `strAwayFormation` TEXT, `intHomeShots` INTEGER, `intAwayShots` INTEGER, `dateEvent` INTEGER, `strDate` TEXT, `strTime` TEXT, `strTVStation` TEXT, `idHomeTeam` INTEGER NOT NULL, `idAwayTeam` INTEGER NOT NULL, `strResult` TEXT, `strCircuit` TEXT, `strCountry` TEXT, `strCity` TEXT, `strPoster` TEXT, `strFanart` TEXT, `strThumb` TEXT, `strBanner` TEXT, `strMap` TEXT, `strLocked` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -16,7 +16,7 @@
           },
           {
             "fieldPath": "idEvent",
-            "columnName": "idEvent",
+            "columnName": "id_event",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -333,7 +333,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"7cd49b120a687cefea0c3a8c99ffd804\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"b110bf56ab8b6ab3dfa38c532718641c\")"
     ]
   }
 }

@@ -2,13 +2,10 @@ package com.small.main.ui.favoritematch
 
 import com.small.main.data.local.database.AppDatabase
 import com.small.main.data.remote.repository.EventRepository
-import com.small.main.data.remote.response.MatchListResponse
-import com.small.main.data.remote.response.MatchResponse
 import com.small.main.util.CoroutinesContextProvider
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.withContext
 import retrofit2.HttpException
-import ru.gildor.coroutines.retrofit.await
 
 class FavoriteMatchPresenter(private val eventRepository: EventRepository,
                              private val appDatabase: AppDatabase,

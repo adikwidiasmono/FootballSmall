@@ -8,17 +8,18 @@ import android.view.Menu
 import android.view.MenuItem
 import com.small.main.R
 import com.small.main.data.local.entity.MatchEntity
-import com.small.main.ui.detailmatch.PrevMatchDetailPresenter
-import com.small.main.ui.detailmatch.PrevMatchDetailView
+import com.small.main.ui.detailmatch.MatchDetailPresenter
+import com.small.main.ui.detailmatch.MatchDetailView
+import com.small.main.util.CommonUtils
 import kotlinx.android.synthetic.main.activity_prev_match_detail.*
 import org.jetbrains.anko.design.snackbar
 import org.koin.android.ext.android.get
 import java.text.SimpleDateFormat
 import java.util.*
 
-class PrevMatchDetailActivity : AppCompatActivity(), PrevMatchDetailView {
+class MatchDetailActivity : AppCompatActivity(), MatchDetailView {
 
-    private lateinit var presenter: PrevMatchDetailPresenter
+    private lateinit var presenter: MatchDetailPresenter
 
     private var menuItem: Menu? = null
     private var isFavorite: Boolean = false
@@ -56,35 +57,35 @@ class PrevMatchDetailActivity : AppCompatActivity(), PrevMatchDetailView {
             if (awayTeam.length > 14)
                 awayTeam.substring(0, 11) + "..."
 
-            tv_home_team_name.text = homeTeam
-            tv_away_team_name.text = awayTeam
+            tv_home_team_name.text = CommonUtils.safePresentString(homeTeam)
+            tv_away_team_name.text = CommonUtils.safePresentString(awayTeam)
 
-            tv_home_team_score.text = it.intHomeScore.toString()
-            tv_away_team_score.text = it.intAwayScore.toString()
+            tv_home_team_score.text = CommonUtils.safePresentString(it.intHomeScore.toString())
+            tv_away_team_score.text = CommonUtils.safePresentString(it.intAwayScore.toString())
 
-            tv_home_formation.text = it.strHomeFormation ?: "-"
-            tv_away_formation.text = it.strAwayFormation ?: "-"
+            tv_home_formation.text = CommonUtils.safePresentString(it.strHomeFormation)
+            tv_away_formation.text = CommonUtils.safePresentString(it.strAwayFormation)
 
-            tv_home_goal_players.text = it.strHomeGoalDetails?.replace(";", "\n") ?: "-"
-            tv_away_goal_players.text = it.strAwayGoalDetails?.replace(";", "\n") ?: "-"
+            tv_home_goal_players.text = CommonUtils.safePresentString(it.strHomeGoalDetails?.replace(";", "\n"))
+            tv_away_goal_players.text = CommonUtils.safePresentString(it.strAwayGoalDetails?.replace(";", "\n"))
 
-            tv_home_shots.text = it.intHomeShots.toString()
-            tv_away_shots.text = it.intAwayShots.toString()
+            tv_home_shots.text = CommonUtils.safePresentString(it.intHomeShots.toString())
+            tv_away_shots.text = CommonUtils.safePresentString(it.intAwayShots.toString())
 
-            tv_home_goalkeeper.text = it.strHomeLineupGoalkeeper ?: "-"
-            tv_away_goalkeeper.text = it.strAwayLineupGoalkeeper ?: "-"
+            tv_home_goalkeeper.text = CommonUtils.safePresentString(it.strHomeLineupGoalkeeper)
+            tv_away_goalkeeper.text = CommonUtils.safePresentString(it.strAwayLineupGoalkeeper)
 
-            tv_home_defense.text = it.strHomeLineupDefense ?: "-"
-            tv_away_defense.text = it.strAwayLineupDefense ?: "-"
+            tv_home_defense.text = CommonUtils.safePresentString(it.strHomeLineupDefense)
+            tv_away_defense.text = CommonUtils.safePresentString(it.strAwayLineupDefense)
 
-            tv_home_midfiled.text = it.strHomeLineupMidfield ?: "-"
-            tv_away_midfield.text = it.strAwayLineupMidfield ?: "-"
+            tv_home_midfiled.text = CommonUtils.safePresentString(it.strHomeLineupMidfield)
+            tv_away_midfield.text = CommonUtils.safePresentString(it.strAwayLineupMidfield)
 
-            tv_home_forward.text = it.strHomeLineupForward ?: "-"
-            tv_away_forward.text = it.strAwayLineupForward ?: "-"
+            tv_home_forward.text = CommonUtils.safePresentString(it.strHomeLineupForward)
+            tv_away_forward.text = CommonUtils.safePresentString(it.strAwayLineupForward)
 
-            tv_home_subtitutes.text = it.strHomeLineupSubstitutes ?: "-"
-            tv_away_subtitutes.text = it.strAwayLineupSubstitutes ?: "-"
+            tv_home_subtitutes.text = CommonUtils.safePresentString(it.strHomeLineupSubstitutes)
+            tv_away_subtitutes.text = CommonUtils.safePresentString(it.strAwayLineupSubstitutes)
 
             it.idHomeTeam?.let { presenter.setTeamLogo(this, it, iv_home_logo) }
             it.idAwayTeam?.let { presenter.setTeamLogo(this, it, iv_away_logo) }
@@ -127,7 +128,6 @@ class PrevMatchDetailActivity : AppCompatActivity(), PrevMatchDetailView {
     }
 
     override fun onSuccessGetFavoriteState(isFavorite: Boolean) {
-        Log.e("IS FAVORITE", "=>" + isFavorite)
         this.isFavorite = isFavorite
         setFavorite()
     }

@@ -14,4 +14,17 @@ class CommonUtilsTest {
         assertEquals("Jum, 26 Okt 2018 09:01", CommonUtils.getStringLocalDate(date))
     }
 
+    @Test
+    fun safePresentStringTest() {
+        val input1 = "INPUT"
+        val input2 = ""
+        val input3 = "Null"
+        val input4 = null
+
+        assertEquals("INPUT", CommonUtils.safePresentString(input1))
+        assertEquals("-", CommonUtils.safePresentString(input2))
+        assertEquals("-", CommonUtils.safePresentString(input3))
+        assertEquals("-", CommonUtils.safePresentString(input4))
+    }
+
 }

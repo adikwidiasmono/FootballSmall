@@ -21,7 +21,7 @@ class NextMatchPresenter(private val eventRepository: EventRepository,
     }
 
     fun loadNextMatch(leagueId: Int) {
-
+        loadNextMatch(leagueId, false)
     }
 
     fun loadNextMatch(leagueId: Int, showLoading: Boolean) {

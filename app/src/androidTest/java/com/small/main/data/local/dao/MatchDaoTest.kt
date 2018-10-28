@@ -9,7 +9,8 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.mock
+import java.util.*
+
 
 @RunWith(AndroidJUnit4::class)
 open class MatchDaoTest {
@@ -28,21 +29,21 @@ open class MatchDaoTest {
 
     @Test
     fun insertMatchSavesData() {
-        val matchEntity = mock(MatchEntity::class.java)
+        val matchEntity = generateMatchEntity()
         val id = appDatabase.matchDao().insert(matchEntity)
 
         val matchEntityRes = appDatabase.matchDao().get(id)
-        assert(matchEntityRes.value != null)
+        assert(matchEntityRes != null)
     }
 
     @Test
     fun getMatchRetrievesData() {
         val listMatchEntity = mutableListOf<MatchEntity>()
-        val a = mock(MatchEntity::class.java)
-        val b = mock(MatchEntity::class.java)
-        val c = mock(MatchEntity::class.java)
-        val d = mock(MatchEntity::class.java)
-        val e = mock(MatchEntity::class.java)
+        val a = generateMatchEntity()
+        val b = generateMatchEntity()
+        val c = generateMatchEntity()
+        val d = generateMatchEntity()
+        val e = generateMatchEntity()
         listMatchEntity.add(a)
         listMatchEntity.add(b)
         listMatchEntity.add(c)
@@ -59,13 +60,82 @@ open class MatchDaoTest {
 
     @Test
     fun clearMatchClearsData() {
-        val matchEntity = mock(MatchEntity::class.java)
+        val matchEntity = generateMatchEntity()
         val id = appDatabase.matchDao().insert(matchEntity)
 
         val matchEntityRes = appDatabase.matchDao().get(id)
-        appDatabase.matchDao().delete(matchEntityRes.value!!)
+        appDatabase.matchDao().delete(matchEntityRes)
 
         assert(appDatabase.matchDao().getAll().isEmpty())
+    }
+
+    fun generateMatchEntity(): MatchEntity {
+        return MatchEntity(
+                genRandomInt(),
+                genRandomInt(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomInt(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomInt(),
+                genRandomInt(),
+                genRandomInt(),
+                genRandomInt(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomInt(),
+                genRandomInt(),
+                Date(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomInt(),
+                genRandomInt(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString(),
+                genRandomString()
+        )
+    }
+
+    fun genRandomString(): String {
+        val chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        var random = ""
+        for (i in 0..31) {
+            random += chars[Math.floor(Math.random() * chars.length).toInt()]
+        }
+        return random
+    }
+
+    fun genRandomInt(): Int {
+        return Random().nextInt(9)
     }
 
 }

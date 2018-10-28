@@ -8,13 +8,13 @@ import com.small.main.data.local.entity.MatchEntity
 interface MatchDao {
 
     @Query("SELECT * FROM match_entity WHERE id = :id")
-    fun get(id: Long): LiveData<MatchEntity>
+    fun get(id: Long): MatchEntity
 
     @Query("SELECT * FROM match_entity")
     fun getAll(): List<MatchEntity>
 
-    @Query("SELECT * FROM match_entity WHERE idEvent = :id")
-    fun getByIdEvent(id: Int): LiveData<MatchEntity>
+    @Query("SELECT * FROM match_entity WHERE id_event = :id")
+    fun getByIdEvent(id: Int): MatchEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(matchEntity: MatchEntity): Long

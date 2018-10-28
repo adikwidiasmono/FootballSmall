@@ -20,5 +20,16 @@ class CommonUtils {
             return finalDate
         }
 
+        fun safePresentString(input: String?): String {
+            if (input == null)
+                return "-"
+            if (input.trim().length < 1)
+                return "-"
+            if (input.toUpperCase().equals("NULL"))
+                return "-"
+
+            return input
+        }
+
     }
 }

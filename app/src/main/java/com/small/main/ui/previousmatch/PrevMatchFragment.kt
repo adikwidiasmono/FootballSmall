@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.haikotlin.main.detail.PrevMatchDetailActivity
+import com.haikotlin.main.detail.MatchDetailActivity
 import com.small.main.R
 import com.small.main.data.remote.response.MatchListResponse
 import com.small.main.data.remote.response.MatchResponse
@@ -46,7 +46,7 @@ class PrevMatchFragment : Fragment(), PrevMatchView {
 
     private fun initList() {
         adapter = EventAdapter(listData) {
-            startActivity<PrevMatchDetailActivity>(
+            startActivity<MatchDetailActivity>(
                     "MATCH_RESULT" to ParseUtils.matchResponseToEntity(it)
             )
         }

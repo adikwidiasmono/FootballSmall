@@ -19,20 +19,9 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
 
-    @BeforeClass
-    fun init() {
-
-    }
-
     @Rule
     @JvmField
     var activityRule = ActivityTestRule(MainActivity::class.java)
-
-    @Before
-    fun onActivityStart() {
-//        activityRule.getActivity()
-//                .getSupportFragmentManager().beginTransaction();
-    }
 
     @Test
     fun testRecyclerViewBehaviour() {

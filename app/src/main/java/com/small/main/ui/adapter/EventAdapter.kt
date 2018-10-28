@@ -38,7 +38,7 @@ class MatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             itemView.tv_away_team_score.text = items.intAwayScore.toString()
         }
 
-        val matchDate = SimpleDateFormat("dd/MM/yy HH:mm:ssX", Locale.ENGLISH)
+        val matchDate = SimpleDateFormat("dd/MM/yy HH:mm:ssZ", Locale.ENGLISH)
                 .parse(items.strDate + " " + items.strTime)
 
         itemView.tv_match_date.text = CommonUtils.getStringLocalDate(matchDate)

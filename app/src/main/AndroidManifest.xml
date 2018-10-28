@@ -20,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.haikotlin.main.detail.PrevMatchDetailActivity" />
+        <activity android:name="com.haikotlin.main.detail.MatchDetailActivity" />
     </application>
 
 </manifest>

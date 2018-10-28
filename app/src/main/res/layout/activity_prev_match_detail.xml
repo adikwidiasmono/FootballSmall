@@ -7,7 +7,7 @@
     android:background="@color/c_white"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context="com.haikotlin.main.detail.PrevMatchDetailActivity">
+    tools:context="com.haikotlin.main.detail.MatchDetailActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

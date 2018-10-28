@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.haikotlin.main.detail.PrevMatchDetailActivity
+import com.haikotlin.main.detail.MatchDetailActivity
 import com.small.main.R
 import com.small.main.data.local.entity.MatchEntity
 import com.small.main.data.remote.response.MatchResponse
@@ -42,9 +43,14 @@ class FavoriteMatchFragment : Fragment(), FavoriteMatchView {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.loadFavoriteMatch()
+    }
+
     private fun initList() {
         adapter = EventAdapter(listData) {
-            startActivity<PrevMatchDetailActivity>(
+            startActivity<MatchDetailActivity>(
                     "MATCH_RESULT" to ParseUtils.matchResponseToEntity(it)
             )
         }

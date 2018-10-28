@@ -8,6 +8,7 @@ import java.util.*
 
 @Entity(tableName = "match_entity")
 data class MatchEntity(
+        @ColumnInfo(name = "id_event")
         var idEvent: Int,
         var idSoccerXML: Int,
         var strEvent: String?,
