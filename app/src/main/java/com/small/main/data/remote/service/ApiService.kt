@@ -34,13 +34,16 @@ interface ApiService {
     @GET("eventsnext.php")
     fun loadNextMatchesByTeamId(@Query("id") teamId: Int): Call<MatchListResponse>
 
-    @GET("")
-    fun loadMatchesByTeamName(@Query("name") teamName: String): Call<MatchListResponse>
+    @GET("searchevents.php")
+    fun loadMatchesByTeamName(@Query("e") teamName: String): Call<MatchListResponse>
 
     @GET("lookup_all_teams.php")
     fun loadTeamsByLeagueId(@Query("id") leagueId: Int): Call<TeamListResponse>
 
     @GET("lookup_all_players.php")
     fun loadPlayersByTeamId(@Query("id") teamId: Int): Call<PlayerListResponse>
+
+    @GET("searchteams.php")
+    fun loadTeamsByTeamName(@Query("t") teamName: String): Call<TeamListResponse>
 
 }
