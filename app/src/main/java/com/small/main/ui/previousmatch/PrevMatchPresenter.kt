@@ -1,9 +1,11 @@
 package com.small.main.ui.previousmatch
 
 import com.small.main.data.remote.repository.EventRepository
+import com.small.main.data.remote.response.MatchListResponse
 import com.small.main.util.CoroutinesContextProvider
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.withContext
+import retrofit2.Call
 import retrofit2.HttpException
 import ru.gildor.coroutines.retrofit.await
 
@@ -24,7 +26,7 @@ class PrevMatchPresenter(private val eventRepository: EventRepository,
         loadLastMatch(leagueId, true)
     }
 
-    fun loadLastMatch(leagueId: Int, showLoading: Boolean) {
+    fun loadLastMatch(leagueId: Int, showLoading: Boolean) : Call<MatchListResponse> {
         if (showLoading)
             prevMatchView?.showLoading()
 
@@ -43,6 +45,8 @@ class PrevMatchPresenter(private val eventRepository: EventRepository,
                 if (showLoading)
                     prevMatchView?.hideLoading()
             }
+
+            return data.await()
         }
     }
 
