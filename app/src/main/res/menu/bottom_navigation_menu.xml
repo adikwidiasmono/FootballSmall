@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/it_prev_match"
+        android:id="@+id/it_matches"
         android:enabled="true"
         android:icon="@drawable/ic_teams"
-        android:title="@string/prev_match"
+        android:title="@string/matches"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/it_next_match"
+        android:id="@+id/it_teams"
         android:enabled="true"
         android:icon="@drawable/ic_teams"
-        android:title="@string/next_match"
+        android:title="@string/teams"
         app:showAsAction="ifRoom" />
 
     <item

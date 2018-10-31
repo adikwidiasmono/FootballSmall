@@ -11,7 +11,7 @@ import com.haikotlin.main.detail.MatchDetailActivity
 import com.small.main.R
 import com.small.main.data.remote.response.MatchListResponse
 import com.small.main.data.remote.response.MatchResponse
-import com.small.main.ui.adapter.EventAdapter
+import com.small.main.ui.adapter.recycleview.EventAdapter
 import com.small.main.util.ParseUtils
 import com.small.main.util.gone
 import com.small.main.util.visible

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,7 @@ import com.haikotlin.main.detail.MatchDetailActivity
 import com.small.main.R
 import com.small.main.data.local.entity.MatchEntity
 import com.small.main.data.remote.response.MatchResponse
-import com.small.main.ui.adapter.EventAdapter
+import com.small.main.ui.adapter.recycleview.EventAdapter
 import com.small.main.util.ParseUtils
 import com.small.main.util.gone
 import com.small.main.util.visible

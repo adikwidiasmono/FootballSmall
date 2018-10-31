@@ -27,11 +27,11 @@ class MainActivityTest {
         onView(withId(bnv_football_match))
                 .check(matches(isDisplayed()))
         // Check & Click Previous Match Button
-        onView(withId(it_prev_match))
+        onView(withId(it_matches))
                 .check(matches(isDisplayed()))
                 .perform(click())
         // Check & Click Next Match Button
-        onView(withId(it_next_match))
+        onView(withId(it_teams))
                 .check(matches(isDisplayed()))
                 .perform(click())
         // Check & Click Favorite Match Button
@@ -40,7 +40,7 @@ class MainActivityTest {
                 .perform(click())
 
         // Back to Previous Match Button
-        onView(withId(it_prev_match))
+        onView(withId(it_matches))
                 .check(matches(isDisplayed()))
                 .perform(click())
 

@@ -22,9 +22,6 @@ interface ApiService {
     @GET("lookupteam.php")
     fun lookupTeam(@Query("id") teamId: Int): Call<TeamListResponse>
 
-
-
-
     @GET("search_all_leagues.php?s=Soccer")
     fun loadAllSoccerLeague(): Call<LeagueListResponse>
 

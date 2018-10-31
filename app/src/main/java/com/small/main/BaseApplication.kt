@@ -12,6 +12,8 @@ import com.small.main.ui.favoritematch.FavoriteMatchPresenter
 import com.small.main.ui.nextmatch.NextMatchPresenter
 import com.small.main.ui.previousmatch.PrevMatchPresenter
 import com.small.main.ui.detailmatch.MatchDetailPresenter
+import com.small.main.ui.teams.TeamsFragment
+import com.small.main.ui.teams.TeamsPresenter
 import com.small.main.util.CoroutinesContextProvider
 import okhttp3.OkHttpClient
 import org.koin.android.ext.android.startKoin
@@ -49,6 +51,7 @@ class BaseApplication : Application() {
         factory { NextMatchPresenter(get(), get()) }
         factory { FavoriteMatchPresenter(get(), get(), get()) }
         factory { MatchDetailPresenter(get(), get(), get()) }
+        factory { TeamsPresenter(get(), get()) }
     }
 
     override fun onCreate() {

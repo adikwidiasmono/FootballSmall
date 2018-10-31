@@ -11,7 +11,7 @@ import com.haikotlin.main.detail.MatchDetailActivity
 import com.small.main.R
 import com.small.main.data.remote.response.MatchListResponse
 import com.small.main.data.remote.response.MatchResponse
-import com.small.main.ui.adapter.EventAdapter
+import com.small.main.ui.adapter.recycleview.EventAdapter
 import com.small.main.util.*
 import kotlinx.android.synthetic.main.fragment_next_match.*
 import org.jetbrains.anko.support.v4.onRefresh

@@ -26,7 +26,7 @@ class PrevMatchPresenter(private val eventRepository: EventRepository,
         loadLastMatch(leagueId, true)
     }
 
-    fun loadLastMatch(leagueId: Int, showLoading: Boolean) : Call<MatchListResponse> {
+    fun loadLastMatch(leagueId: Int, showLoading: Boolean) {
         if (showLoading)
             prevMatchView?.showLoading()
 
@@ -45,8 +45,6 @@ class PrevMatchPresenter(private val eventRepository: EventRepository,
                 if (showLoading)
                     prevMatchView?.hideLoading()
             }
-
-            return data.await()
         }
     }
 

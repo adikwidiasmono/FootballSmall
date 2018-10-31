@@ -8,33 +8,19 @@ import com.small.main.data.remote.service.ApiService
 import retrofit2.Call
 
 class EventRepositoryImpl(private val apiService: ApiService) : EventRepository {
-    override fun loadAllSoccerLeague(): Call<LeagueListResponse> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun loadAllSoccerLeague(): Call<LeagueListResponse> = apiService.loadAllSoccerLeague()
 
-    override fun loadLastMatchesByTeamId(teamId: Int): Call<MatchListResponse> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun loadLastMatchesByTeamId(teamId: Int): Call<MatchListResponse> = apiService.loadLastMatchesByTeamId(teamId)
 
-    override fun loadNextMatchesByTeamId(teamId: Int): Call<MatchListResponse> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun loadNextMatchesByTeamId(teamId: Int): Call<MatchListResponse> = apiService.loadNextMatchesByTeamId(teamId)
 
-    override fun loadMatchesByTeamName(teamName: String): Call<MatchListResponse> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun loadMatchesByTeamName(teamName: String): Call<MatchListResponse> = apiService.loadMatchesByTeamName(teamName)
 
-    override fun loadTeamsByLeagueId(leagueId: Int): Call<TeamListResponse> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun loadTeamsByLeagueId(leagueId: Int): Call<TeamListResponse> = apiService.loadTeamsByLeagueId(leagueId)
 
-    override fun loadPlayersByTeamId(teamId: Int): Call<PlayerListResponse> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun loadPlayersByTeamId(teamId: Int): Call<PlayerListResponse> = apiService.loadPlayersByTeamId(teamId)
 
-    override fun loadTeamsByTeamName(teamName: String): Call<TeamListResponse> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun loadTeamsByTeamName(teamName: String): Call<TeamListResponse> = apiService.loadTeamsByTeamName(teamName)
 
     override fun loadLastMatch(leagueId: Int): Call<MatchListResponse> = apiService.loadLastMatchesByLeagueId(leagueId)
 
