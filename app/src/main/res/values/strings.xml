@@ -8,5 +8,7 @@
     <string name="matches">Matches</string>
 
     <string name="err_get_remote_data">Error, failed to get data from server</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Search...</string>
 
 </resources>
