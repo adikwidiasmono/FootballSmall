@@ -10,14 +10,14 @@ import ru.gildor.coroutines.retrofit.await
 class TeamsPresenter(private val eventRepository: EventRepository,
                      private val contextProvider: CoroutinesContextProvider) {
 
-    private var matchView: TeamsView? = null
+    private var teamsView: TeamsView? = null
 
     fun attachView(matchView: TeamsView) {
-        this.matchView = matchView
+        this.teamsView = matchView
     }
 
     fun detachView() {
-        matchView = null
+        teamsView = null
     }
 
     fun loadTeams(idLeague: Int) {
@@ -26,42 +26,60 @@ class TeamsPresenter(private val eventRepository: EventRepository,
 
     fun loadTeams(idLeague: Int, showLoading: Boolean) {
         if (showLoading)
-            matchView?.showLoading()
+            teamsView?.showLoading()
 
         launch(contextProvider.main) {
             val data = withContext(contextProvider.io) { eventRepository.loadTeamsByLeagueId(idLeague) }
             try {
-                matchView?.showTeamList(data.await())
+                teamsView?.showTeamList(data.await())
                 if (showLoading)
-                    matchView?.hideLoading()
+                    teamsView?.hideLoading()
             } catch (e: HttpException) {
                 e.printStackTrace()
-                matchView?.onErrorTeamList()
+                teamsView?.onErrorTeamList()
                 if (showLoading)
-                    matchView?.hideLoading()
+                    teamsView?.hideLoading()
             } catch (e: Throwable) {
                 e.printStackTrace()
-                matchView?.onErrorTeamList()
+                teamsView?.onErrorTeamList()
                 if (showLoading)
-                    matchView?.hideLoading()
+                    teamsView?.hideLoading()
             }
         }
     }
 
     fun loadLeagues() {
-        matchView?.showLoading()
+        teamsView?.showLoading()
 
         launch(contextProvider.main) {
             val data = withContext(contextProvider.io) { eventRepository.loadAllSoccerLeague() }
             try {
-                matchView?.showLeagueList(data.await())
-                matchView?.hideLoading()
+                teamsView?.showLeagueList(data.await())
+                teamsView?.hideLoading()
             } catch (e: HttpException) {
-                matchView?.onErrorLeagueList()
-                matchView?.hideLoading()
+                teamsView?.onErrorLeagueList()
+                teamsView?.hideLoading()
             } catch (e: Throwable) {
-                matchView?.onErrorLeagueList()
-                matchView?.hideLoading()
+                teamsView?.onErrorLeagueList()
+                teamsView?.hideLoading()
+            }
+        }
+    }
+
+    fun searchTeam(queryTeamName: String) {
+        teamsView?.showLoading()
+
+        launch(contextProvider.main) {
+            val data = withContext(contextProvider.io) { eventRepository.loadTeamsByTeamName(queryTeamName) }
+            try {
+                teamsView?.showSearchTeamList(data.await())
+                teamsView?.hideLoading()
+            } catch (e: HttpException) {
+                teamsView?.onErrorSearchTeamList()
+                teamsView?.hideLoading()
+            } catch (e: Throwable) {
+                teamsView?.onErrorSearchTeamList()
+                teamsView?.hideLoading()
             }
         }
     }

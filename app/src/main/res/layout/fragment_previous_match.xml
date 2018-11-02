@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.previousmatch.PrevMatchFragment">
+    tools:context=".ui.matches.previousmatch.PrevMatchFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srl_previous_match"

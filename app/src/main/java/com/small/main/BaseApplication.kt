@@ -8,12 +8,13 @@ import com.small.main.data.local.database.AppDatabase
 import com.small.main.data.remote.repository.EventRepository
 import com.small.main.data.remote.repository.EventRepositoryImpl
 import com.small.main.data.remote.service.ApiService
-import com.small.main.ui.favoritematch.FavoriteMatchPresenter
-import com.small.main.ui.nextmatch.NextMatchPresenter
-import com.small.main.ui.previousmatch.PrevMatchPresenter
-import com.small.main.ui.detailmatch.MatchDetailPresenter
-import com.small.main.ui.teams.TeamsFragment
+import com.small.main.ui.favorites.favoritematch.FavoriteMatchPresenter
+import com.small.main.ui.matches.nextmatch.NextMatchPresenter
+import com.small.main.ui.matches.previousmatch.PrevMatchPresenter
+import com.small.main.ui.matches.detailmatch.MatchDetailPresenter
+import com.small.main.ui.matches.MatchesPresenter
 import com.small.main.ui.teams.TeamsPresenter
+import com.small.main.ui.teams.detailteam.TeamDetailPresenter
 import com.small.main.util.CoroutinesContextProvider
 import okhttp3.OkHttpClient
 import org.koin.android.ext.android.startKoin
@@ -52,6 +53,8 @@ class BaseApplication : Application() {
         factory { FavoriteMatchPresenter(get(), get(), get()) }
         factory { MatchDetailPresenter(get(), get(), get()) }
         factory { TeamsPresenter(get(), get()) }
+        factory { MatchesPresenter(get(), get()) }
+        factory { TeamDetailPresenter(get(), get(), get()) }
     }
 
     override fun onCreate() {

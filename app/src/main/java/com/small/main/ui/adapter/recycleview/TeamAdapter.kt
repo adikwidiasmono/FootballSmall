@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.small.main.R
-import com.small.main.data.remote.response.FootballTeamItem
+import com.small.main.data.remote.response.TeamResponse
 import com.small.main.util.CommonUtils
 import kotlinx.android.synthetic.main.item_team.view.*
 
-class TeamAdapter(private val teams: List<FootballTeamItem>,
-                  private val listener: (FootballTeamItem) -> Unit)
+class TeamAdapter(private val teams: List<TeamResponse>,
+                  private val listener: (TeamResponse) -> Unit)
     : RecyclerView.Adapter<TeamViewHolder>() {
 
     override fun onBindViewHolder(holder: TeamViewHolder, position: Int) {
@@ -27,7 +27,7 @@ class TeamAdapter(private val teams: List<FootballTeamItem>,
 }
 
 class TeamViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    fun bindItem(items: FootballTeamItem, listener: (FootballTeamItem) -> Unit) {
+    fun bindItem(items: TeamResponse, listener: (TeamResponse) -> Unit) {
 
         Glide.with(itemView.context)
                 .load(items.strTeamBadge)

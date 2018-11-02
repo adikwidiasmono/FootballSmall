@@ -1,4 +1,4 @@
-package com.small.main.ui.favoritematch
+package com.small.main.ui.favorites.favoritematch
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar

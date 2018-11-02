@@ -1,27 +1,24 @@
 package com.small.main.data.remote.repository
 
-import com.small.main.data.remote.response.LeagueListResponse
-import com.small.main.data.remote.response.MatchListResponse
-import com.small.main.data.remote.response.PlayerListResponse
-import com.small.main.data.remote.response.TeamListResponse
+import com.small.main.data.remote.response.*
 import retrofit2.Call
 
 interface EventRepository {
-    fun loadLastMatch(leagueId: Int): Call<MatchListResponse>
+    fun loadLastMatch(leagueId: Int): Call<MatchByLeagueListResponse>
 
-    fun loadNextMatch(leagueId: Int): Call<MatchListResponse>
+    fun loadNextMatch(leagueId: Int): Call<MatchByLeagueListResponse>
 
-    fun loadTodayMatch(leagueId: Int, date: String): Call<MatchListResponse>
+    fun loadTodayMatch(leagueId: Int, date: String): Call<MatchByLeagueListResponse>
 
     fun lookupTeam(teamId: Int): Call<TeamListResponse>
 
     fun loadAllSoccerLeague(): Call<LeagueListResponse>
 
-    fun loadLastMatchesByTeamId(teamId: Int): Call<MatchListResponse>
+    fun loadLastMatchesByTeamId(teamId: Int): Call<MatchByTeamListResponse>
 
-    fun loadNextMatchesByTeamId(teamId: Int): Call<MatchListResponse>
+    fun loadNextMatchesByTeamId(teamId: Int): Call<MatchByTeamListResponse>
 
-    fun loadMatchesByTeamName(teamName: String): Call<MatchListResponse>
+    fun loadMatchesByTeamName(teamName: String): Call<MatchBySearchListResponse>
 
     fun loadTeamsByLeagueId(leagueId: Int): Call<TeamListResponse>
 

@@ -1,4 +1,4 @@
-package com.small.main.ui.favoritematch
+package com.small.main.ui.favorites.favoritematch
 
 import com.small.main.data.local.entity.MatchEntity
 

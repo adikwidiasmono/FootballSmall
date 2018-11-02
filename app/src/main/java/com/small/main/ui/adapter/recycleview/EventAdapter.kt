@@ -28,33 +28,48 @@ class EventAdapter(private val matches: List<MatchResponse>,
 
 class MatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bindItem(items: MatchResponse, listener: (MatchResponse) -> Unit) {
+        if (items.strSport != null && items.strSport.equals("Soccer", true)) {
+            if (items.intHomeScore == null || items.intAwayScore == null) {
+                itemView.tv_home_team_score.visibility = View.INVISIBLE
+                itemView.tv_away_team_score.visibility = View.INVISIBLE
+            } else {
+                itemView.tv_home_team_score.text = items.intHomeScore.toString()
+                itemView.tv_away_team_score.text = items.intAwayScore.toString()
+            }
 
-        if (items.intHomeScore == null || items.intAwayScore == null) {
-            itemView.tv_home_team_score.visibility = View.INVISIBLE
-            itemView.tv_away_team_score.visibility = View.INVISIBLE
-        } else {
-            itemView.tv_home_team_score.text = items.intHomeScore.toString()
-            itemView.tv_away_team_score.text = items.intAwayScore.toString()
-        }
+            var matchDate: Date
 
-        val matchDate = SimpleDateFormat("dd/MM/yy HH:mm:ssZ", Locale.ENGLISH)
-                .parse(items.strDate + " " + items.strTime)
+            if (items.strTime == null) {
+                matchDate = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+                        .parse(items.dateEvent)
+            } else if (items.strTime?.contains("\\+")!!) {
+                matchDate = SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ", Locale.ENGLISH)
+                        .parse(items.dateEvent + " " + items.strTime)
+            } else {
+                matchDate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
+                        .parse(items.dateEvent + " " + items.strTime)
+            }
 
-        itemView.tv_match_date.text = CommonUtils.getStringLocalDate(matchDate)
-        val strs = items.strEvent?.split("vs")
-        var homeTeam = strs?.get(0)?.trim() ?: "Unknown Team"
-        var awayTeam = strs?.get(1)?.trim() ?: "Unknown Team"
+            itemView.tv_match_date.text = CommonUtils.getStringLocalDate(matchDate)
+            val strs = items.strEvent?.split("vs")
+            var homeTeam = "-"
+            var awayTeam = "-"
+            if (strs != null && strs?.size > 1) {
+                homeTeam = strs?.get(0)?.trim()
+                awayTeam = strs?.get(1)?.trim()
+            }
 
-        if (homeTeam.length > 14)
-            homeTeam.substring(0, 11) + "..."
-        if (awayTeam.length > 14)
-            awayTeam.substring(0, 11) + "..."
+            if (homeTeam.length > 14)
+                homeTeam.substring(0, 11) + "..."
+            if (awayTeam.length > 14)
+                awayTeam.substring(0, 11) + "..."
 
-        itemView.tv_home_team_name.text = homeTeam
-        itemView.tv_away_team_name.text = awayTeam
+            itemView.tv_home_team_name.text = homeTeam
+            itemView.tv_away_team_name.text = awayTeam
 
-        itemView.setOnClickListener {
-            listener(items)
+            itemView.setOnClickListener {
+                listener(items)
+            }
         }
     }
 }

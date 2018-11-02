@@ -1,17 +1,12 @@
 package com.small.main.ui
 
-import android.app.SearchManager
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.SearchView
-import android.util.Log
-import android.view.Menu
 import com.small.main.R
-import com.small.main.ui.favoritematch.FavoriteMatchFragment
+import com.small.main.ui.favorites.FavoritesFragment
+import com.small.main.ui.favorites.favoritematch.FavoriteMatchFragment
 import com.small.main.ui.matches.MatchesFragment
-import com.small.main.ui.previousmatch.PrevMatchFragment
 import com.small.main.ui.teams.TeamsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -32,7 +27,7 @@ class MainActivity : AppCompatActivity() {
                     loadFragment(savedInstanceState, TeamsFragment(), getString(R.string.teams))
                 }
                 R.id.it_favorites -> {
-                    loadFragment(savedInstanceState, FavoriteMatchFragment(), getString(R.string.favorites))
+                    loadFragment(savedInstanceState, FavoritesFragment(), getString(R.string.favorites))
                 }
             }
             true

@@ -1,11 +1,9 @@
-package com.small.main.ui.previousmatch
+package com.small.main.ui.matches.previousmatch
 
 import com.small.main.data.remote.repository.EventRepository
-import com.small.main.data.remote.response.MatchListResponse
 import com.small.main.util.CoroutinesContextProvider
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.withContext
-import retrofit2.Call
 import retrofit2.HttpException
 import ru.gildor.coroutines.retrofit.await
 

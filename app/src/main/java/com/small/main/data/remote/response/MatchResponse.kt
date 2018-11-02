@@ -2,7 +2,6 @@ package com.small.main.data.remote.response
 
 import android.os.Parcel
 import android.os.Parcelable
-import java.util.*
 
 data class MatchResponse(
         var idEvent: Int,
@@ -40,7 +39,7 @@ data class MatchResponse(
         var strAwayFormation: String?,
         var intHomeShots: Int?,
         var intAwayShots: Int?,
-        var dateEvent: Date?,
+        var dateEvent: String?,
         var strDate: String?,
         var strTime: String?,
         var strTVStation: String?,
@@ -93,7 +92,7 @@ data class MatchResponse(
             parcel.readString(),
             parcel.readValue(Int::class.java.classLoader) as? Int,
             parcel.readValue(Int::class.java.classLoader) as? Int,
-            parcel.readValue(Date::class.java.classLoader) as? Date,
+            parcel.readString(),
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),

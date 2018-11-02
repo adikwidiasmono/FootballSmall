@@ -8,8 +8,10 @@ interface TeamsView {
     fun showLoading()
     fun hideLoading()
     fun showTeamList(teamListResponse: TeamListResponse)
+    fun showSearchTeamList(teamListResponse: TeamListResponse)
     fun showLeagueList(leagueListResponse: LeagueListResponse)
     fun onErrorTeamList()
+    fun onErrorSearchTeamList()
     fun onErrorLeagueList()
 
 }

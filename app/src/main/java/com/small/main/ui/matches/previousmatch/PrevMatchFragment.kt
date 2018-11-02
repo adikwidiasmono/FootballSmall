@@ -1,26 +1,29 @@
-package com.small.main.ui.nextmatch
+package com.small.main.ui.matches.previousmatch
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.haikotlin.main.detail.MatchDetailActivity
 import com.small.main.R
-import com.small.main.data.remote.response.MatchListResponse
+import com.small.main.data.remote.response.MatchByLeagueListResponse
 import com.small.main.data.remote.response.MatchResponse
 import com.small.main.ui.adapter.recycleview.EventAdapter
-import com.small.main.util.*
-import kotlinx.android.synthetic.main.fragment_next_match.*
+import com.small.main.util.ParseUtils
+import com.small.main.util.gone
+import com.small.main.util.visible
+import kotlinx.android.synthetic.main.fragment_previous_match.*
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.startActivity
 import org.koin.android.ext.android.get
 
-class NextMatchFragment : Fragment(), NextMatchView {
+class PrevMatchFragment : Fragment(), PrevMatchView {
 
-    private lateinit var presenter: NextMatchPresenter
+    private lateinit var presenter: PrevMatchPresenter
     private lateinit var adapter: EventAdapter
     private val listData: MutableList<MatchResponse> = mutableListOf()
 
@@ -28,17 +31,17 @@ class NextMatchFragment : Fragment(), NextMatchView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.fragment_next_match, container, false)
+            inflater.inflate(R.layout.fragment_previous_match, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initList()
         presenter = get()
         presenter.attachView(this)
-        presenter.loadNextMatch(leagueId)
+        presenter.loadLastMatch(leagueId)
 
-        srl_next_match.onRefresh {
-            presenter.loadNextMatch(leagueId, false)
+        srl_previous_match.onRefresh {
+            presenter.loadLastMatch(leagueId, false)
         }
     }
 
@@ -48,8 +51,8 @@ class NextMatchFragment : Fragment(), NextMatchView {
                     "MATCH_RESULT" to ParseUtils.matchResponseToEntity(it)
             )
         }
-        rv_next_match.layoutManager = LinearLayoutManager(activity)
-        rv_next_match.adapter = this.adapter
+        rv_previous_match.layoutManager = LinearLayoutManager(activity)
+        rv_previous_match.adapter = this.adapter
     }
 
     override fun onDestroyView() {
@@ -58,35 +61,36 @@ class NextMatchFragment : Fragment(), NextMatchView {
     }
 
     override fun showLoading() {
-        pb_next_match.visible()
+        pb_previous_match.visible()
     }
 
     override fun hideLoading() {
-        pb_next_match.gone()
-        srl_next_match.isRefreshing = false
+        pb_previous_match.gone()
+        srl_previous_match.isRefreshing = false
     }
 
-    override fun showResultList(matchListResponse: MatchListResponse) {
+    override fun showResultList(matchByLeagueListResponse: MatchByLeagueListResponse) {
         listData.clear()
-        matchListResponse.events?.let {
-            for (i in matchListResponse.events.indices) {
-                listData.add(matchListResponse.events[i])
+        matchByLeagueListResponse.events?.let {
+            for (i in matchByLeagueListResponse.events.indices) {
+                listData.add(matchByLeagueListResponse.events[i])
             }
         }
+
         adapter.notifyDataSetChanged()
 
-        srl_next_match.isRefreshing = false
+        srl_previous_match.isRefreshing = false
     }
 
     override fun showError() {
         val snbar = Snackbar.make(
-                rl_next_match,
+                rl_previous_match,
                 getString(R.string.err_get_remote_data),
                 Snackbar.LENGTH_LONG
         );
         snbar.setAction("RELOAD",
                 {
-                    presenter.loadNextMatch(leagueId)
+                    presenter.loadLastMatch(leagueId)
                     snbar.dismiss()
                 }
         )

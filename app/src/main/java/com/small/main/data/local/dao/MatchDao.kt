@@ -1,6 +1,5 @@
 package com.small.main.data.local.dao
 
-import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 import com.small.main.data.local.entity.MatchEntity
 

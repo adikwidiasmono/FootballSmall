@@ -4,7 +4,6 @@ import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import java.io.Serializable
-import java.util.*
 
 @Entity(tableName = "match_entity")
 data class MatchEntity(
@@ -44,7 +43,7 @@ data class MatchEntity(
         var strAwayFormation: String?,
         var intHomeShots: Int?,
         var intAwayShots: Int?,
-        var dateEvent: Date?,
+        var dateEvent: String?,
         var strDate: String?,
         var strTime: String?,
         var strTVStation: String?,

@@ -3,7 +3,8 @@ package com.small.main.data.remote.response
 import android.os.Parcel
 import android.os.Parcelable
 
-class FootballTeamItem(
+data class TeamResponse(
+        val idTeam: Int,
         val intStadiumCapacity: String?,
         val strTeamShort: String?,
         val strSport: String?,
@@ -33,7 +34,6 @@ class FootballTeamItem(
         val intFormedYear: String?,
         val strInstagram: String?,
         val strDescriptionIT: String?,
-        val idTeam: Int,
         val strDescriptionEN: String?,
         val strWebsite: String?,
         val strYoutube: String?,
@@ -56,6 +56,7 @@ class FootballTeamItem(
         val strDescriptionPL: String?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
+            parcel.readValue(Int::class.java.classLoader) as Int,
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
@@ -85,7 +86,6 @@ class FootballTeamItem(
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
-            parcel.readValue(Int::class.java.classLoader) as Int,
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
@@ -109,6 +109,7 @@ class FootballTeamItem(
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(idTeam)
         parcel.writeString(intStadiumCapacity)
         parcel.writeString(strTeamShort)
         parcel.writeString(strSport)
@@ -138,7 +139,6 @@ class FootballTeamItem(
         parcel.writeString(intFormedYear)
         parcel.writeString(strInstagram)
         parcel.writeString(strDescriptionIT)
-        parcel.writeInt(idTeam)
         parcel.writeString(strDescriptionEN)
         parcel.writeString(strWebsite)
         parcel.writeString(strYoutube)
@@ -165,12 +165,12 @@ class FootballTeamItem(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<FootballTeamItem> {
-        override fun createFromParcel(parcel: Parcel): FootballTeamItem {
-            return FootballTeamItem(parcel)
+    companion object CREATOR : Parcelable.Creator<TeamResponse> {
+        override fun createFromParcel(parcel: Parcel): TeamResponse {
+            return TeamResponse(parcel)
         }
 
-        override fun newArray(size: Int): Array<FootballTeamItem?> {
+        override fun newArray(size: Int): Array<TeamResponse?> {
             return arrayOfNulls(size)
         }
     }

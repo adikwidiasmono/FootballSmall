@@ -1,4 +1,4 @@
-package com.small.main.ui.detailmatch
+package com.small.main.ui.matches.detailmatch
 
 import android.app.Activity
 import android.util.Log
@@ -53,7 +53,7 @@ class MatchDetailPresenter(private val eventRepository: EventRepository,
         }
     }
 
-    fun removeMatchToFavorite(matchEntity: MatchEntity) {
+    fun removeMatchFromFavorite(matchEntity: MatchEntity) {
         launch(contextProvider.main) {
             val data = withContext(contextProvider.io) {
                 val matchEntityResult = appDatabase.matchDao().getByIdEvent(matchEntity.idEvent)

@@ -3,7 +3,7 @@ package com.small.main.data.remote.repository
 import android.support.test.runner.AndroidJUnit4
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.small.main.data.remote.response.MatchListResponse
+import com.small.main.data.remote.response.MatchByLeagueListResponse
 import com.small.main.data.remote.service.ApiService
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
@@ -65,7 +65,7 @@ class EventRepositoryImplTest {
         val call = eventRepository.loadLastMatch(leagueId)
 
         // Compare the result from mock server with given JSON
-        assertEquals(call.execute().body(), Gson().fromJson(jsonBody, MatchListResponse::class.java))
+        assertEquals(call.execute().body(), Gson().fromJson(jsonBody, MatchByLeagueListResponse::class.java))
     }
 
 }

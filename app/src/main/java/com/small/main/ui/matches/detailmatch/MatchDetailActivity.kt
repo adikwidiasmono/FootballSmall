@@ -8,8 +8,8 @@ import android.view.Menu
 import android.view.MenuItem
 import com.small.main.R
 import com.small.main.data.local.entity.MatchEntity
-import com.small.main.ui.detailmatch.MatchDetailPresenter
-import com.small.main.ui.detailmatch.MatchDetailView
+import com.small.main.ui.matches.detailmatch.MatchDetailPresenter
+import com.small.main.ui.matches.detailmatch.MatchDetailView
 import com.small.main.util.CommonUtils
 import kotlinx.android.synthetic.main.activity_prev_match_detail.*
 import org.jetbrains.anko.design.snackbar
@@ -35,22 +35,33 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailView {
 
         toolbar.title = "Match Detail"
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true);
-        supportActionBar?.setDisplayShowHomeEnabled(true);
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         matchItem = intent.getSerializableExtra("MATCH_RESULT") as MatchEntity
         matchItem?.let {
-            val matchDate = SimpleDateFormat("dd/MM/yy HH:mm:ss+HH:mm", Locale.ENGLISH)
-                    .parse(it.strDate + " " + it.strTime)
+            var matchDate: Date
 
-            val matchDateFormatted = SimpleDateFormat("EEE, dd MMM yyyy", Locale("in", "ID"))
-            matchDateFormatted.timeZone = TimeZone.getTimeZone("Asia/Jakarta");
+            if (it.strTime == null) {
+                matchDate = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+                        .parse(it.dateEvent)
+            } else if (it.strTime?.contains("\\+")!!) {
+                matchDate = SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ", Locale.ENGLISH)
+                        .parse(it.dateEvent + " " + it.strTime)
+            } else {
+                matchDate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
+                        .parse(it.dateEvent + " " + it.strTime)
+            }
 
-            tv_match_date.text = matchDateFormatted.format(matchDate)
+            tv_match_date.text = CommonUtils.getStringLocalDate(matchDate)
 
             val strs = it.strEvent?.split("vs")
-            var homeTeam = strs?.get(0)?.trim() ?: "Unknown Team"
-            var awayTeam = strs?.get(1)?.trim() ?: "Unknown Team"
+            var homeTeam = "-"
+            var awayTeam = "-"
+            if (strs != null && strs?.size > 1) {
+                homeTeam = strs?.get(0)?.trim()
+                awayTeam = strs?.get(1)?.trim()
+            }
 
             if (homeTeam.length > 14)
                 homeTeam.substring(0, 11) + "..."
@@ -127,6 +138,13 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailView {
         return true
     }
 
+    private fun setFavorite() {
+        if (isFavorite)
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_added_to_favorites)
+        else
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_add_to_favorites)
+    }
+
     override fun onSuccessGetFavoriteState(isFavorite: Boolean) {
         this.isFavorite = isFavorite
         setFavorite()
@@ -153,7 +171,7 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailView {
 
     private fun removeFromFavorite() {
         matchItem?.let {
-            presenter.removeMatchToFavorite(it)
+            presenter.removeMatchFromFavorite(it)
         }
     }
 
@@ -163,13 +181,6 @@ class MatchDetailActivity : AppCompatActivity(), MatchDetailView {
 
     override fun onErrorRemoveFavorite(e: Throwable) {
         snackbar(ll_match_detail, "Failed remove from favorite").show()
-    }
-
-    private fun setFavorite() {
-        if (isFavorite)
-            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_added_to_favorites)
-        else
-            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_add_to_favorites)
     }
 
 }

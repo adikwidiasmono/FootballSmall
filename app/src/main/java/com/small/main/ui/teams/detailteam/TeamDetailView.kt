@@ -1,6 +1,6 @@
-package com.small.main.ui.detailmatch
+package com.small.main.ui.teams.detailteam
 
-interface MatchDetailView {
+interface TeamDetailView {
 
     fun onSuccessAddFavorite(id: Long)
     fun onErrorAddFavorite(e: Throwable)

@@ -1,4 +1,4 @@
-package com.small.main.ui.nextmatch
+package com.small.main.ui.matches.nextmatch
 
 import com.small.main.data.remote.repository.EventRepository
 import com.small.main.util.CoroutinesContextProvider
