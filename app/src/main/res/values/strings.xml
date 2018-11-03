@@ -6,6 +6,8 @@
     <string name="prev_match">Prev. Match</string>
     <string name="next_match">Next Match</string>
     <string name="favorites">Favorites</string>
+    <string name="overview">Overview</string>
+    <string name="players">Players</string>
 
     <string name="err_get_remote_data">Error, failed to get data from server</string>
     <string name="search">Search</string>

@@ -31,17 +31,35 @@ class NextMatchPresenter(private val eventRepository: EventRepository,
         launch(contextProvider.main) {
             val data = withContext(contextProvider.io) { eventRepository.loadNextMatch(leagueId) }
             try {
-                nextMatchView?.showResultList(data.await())
+                nextMatchView?.showMatchList(data.await())
                 if (showLoading)
                     nextMatchView?.hideLoading()
             } catch (e: HttpException) {
-                nextMatchView?.showError()
+                nextMatchView?.showErrorMatchList()
                 if (showLoading)
                     nextMatchView?.hideLoading()
             } catch (e: Throwable) {
-                nextMatchView?.showError()
+                nextMatchView?.showErrorMatchList()
                 if (showLoading)
                     nextMatchView?.hideLoading()
+            }
+        }
+    }
+
+    fun loadLeagues() {
+        nextMatchView?.showLoading()
+
+        launch(contextProvider.main) {
+            val data = withContext(contextProvider.io) { eventRepository.loadAllSoccerLeague() }
+            try {
+                nextMatchView?.showLeagueList(data.await())
+                nextMatchView?.hideLoading()
+            } catch (e: HttpException) {
+                nextMatchView?.onErrorLeagueList()
+                nextMatchView?.hideLoading()
+            } catch (e: Throwable) {
+                nextMatchView?.onErrorLeagueList()
+                nextMatchView?.hideLoading()
             }
         }
     }

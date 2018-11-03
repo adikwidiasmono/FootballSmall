@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.small.main.R
 import com.small.main.ui.favorites.favoritematch.FavoriteMatchFragment
+import com.small.main.ui.favorites.favoriteteam.FavoriteTeamFragment
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import kotlinx.android.synthetic.main.fragment_favorites.view.*
 
@@ -33,8 +34,7 @@ class FavoritesFragment : Fragment() {
 
     private fun setupViewPager(viewPager: ViewPager) {
         val adapter = ViewPagerAdapter(childFragmentManager)
-        // TODO : Change to favorite teams
-        adapter.addFragment(FavoriteMatchFragment(), getString(R.string.teams))
+        adapter.addFragment(FavoriteTeamFragment(), getString(R.string.teams))
         adapter.addFragment(FavoriteMatchFragment(), getString(R.string.matches))
         viewPager.adapter = adapter
     }

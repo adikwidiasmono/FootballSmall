@@ -8,11 +8,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import com.haikotlin.main.detail.MatchDetailActivity
 import com.small.main.R
+import com.small.main.data.remote.response.LeagueListResponse
 import com.small.main.data.remote.response.MatchByLeagueListResponse
 import com.small.main.data.remote.response.MatchResponse
 import com.small.main.ui.adapter.recycleview.EventAdapter
+import com.small.main.ui.adapter.spinner.LeagueAdapter
 import com.small.main.util.ParseUtils
 import com.small.main.util.gone
 import com.small.main.util.visible
@@ -27,7 +30,10 @@ class PrevMatchFragment : Fragment(), PrevMatchView {
     private lateinit var adapter: EventAdapter
     private val listData: MutableList<MatchResponse> = mutableListOf()
 
-    private val leagueId = 4328
+    private lateinit var spAdapter: LeagueAdapter
+
+    // Default league ID
+    private var idLeague = 4328
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
@@ -38,10 +44,11 @@ class PrevMatchFragment : Fragment(), PrevMatchView {
         initList()
         presenter = get()
         presenter.attachView(this)
-        presenter.loadLastMatch(leagueId)
+        // Load all league
+        presenter.loadLeagues()
 
         srl_previous_match.onRefresh {
-            presenter.loadLastMatch(leagueId, false)
+            presenter.loadLastMatch(idLeague, false)
         }
     }
 
@@ -53,6 +60,34 @@ class PrevMatchFragment : Fragment(), PrevMatchView {
         }
         rv_previous_match.layoutManager = LinearLayoutManager(activity)
         rv_previous_match.adapter = this.adapter
+    }
+
+    override fun showLeagueList(leagueListResponse: LeagueListResponse) {
+        val sortedList = leagueListResponse.countrys?.sortedWith(
+                compareBy({ it?.strLeague })
+        )
+        spAdapter = LeagueAdapter(activity, R.layout.item_league, sortedList)
+        sp_previous_match.adapter = spAdapter
+
+        // Set default selection to Premier League
+        sp_previous_match.setSelection(17)
+
+        sp_previous_match?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                idLeague = spAdapter.getItem(position)?.idLeague ?: 4328
+                presenter.loadLastMatch(idLeague)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
+    }
+
+    override fun onErrorLeagueList() {
+        sp_previous_match.gone()
+        // Load previous match based on default league ID
+        presenter.loadLastMatch(idLeague)
     }
 
     override fun onDestroyView() {
@@ -69,7 +104,7 @@ class PrevMatchFragment : Fragment(), PrevMatchView {
         srl_previous_match.isRefreshing = false
     }
 
-    override fun showResultList(matchByLeagueListResponse: MatchByLeagueListResponse) {
+    override fun showMatchList(matchByLeagueListResponse: MatchByLeagueListResponse) {
         listData.clear()
         matchByLeagueListResponse.events?.let {
             for (i in matchByLeagueListResponse.events.indices) {
@@ -82,7 +117,7 @@ class PrevMatchFragment : Fragment(), PrevMatchView {
         srl_previous_match.isRefreshing = false
     }
 
-    override fun showError() {
+    override fun showErrorMatchList() {
         val snbar = Snackbar.make(
                 rl_previous_match,
                 getString(R.string.err_get_remote_data),
@@ -90,7 +125,7 @@ class PrevMatchFragment : Fragment(), PrevMatchView {
         );
         snbar.setAction("RELOAD",
                 {
-                    presenter.loadLastMatch(leagueId)
+                    presenter.loadLastMatch(idLeague)
                     snbar.dismiss()
                 }
         )

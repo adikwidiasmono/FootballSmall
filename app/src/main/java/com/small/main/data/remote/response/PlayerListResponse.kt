@@ -1,5 +1,3 @@
 package com.small.main.data.remote.response
 
-data class PlayerListResponse(
-	val player: List<PlayerItem?>? = null
-)
+data class PlayerListResponse(val player: List<PlayerItem>?)

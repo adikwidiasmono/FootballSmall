@@ -111,6 +111,9 @@ class TeamsFragment : Fragment(), TeamsView {
         spAdapter = LeagueAdapter(activity, R.layout.item_league, sortedList)
         sp_teams.adapter = spAdapter
 
+        // Set default selection to Premier League
+        sp_teams.setSelection(17)
+
         sp_teams?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 idLeague = spAdapter.getItem(position)?.idLeague ?: 4328

@@ -7,10 +7,18 @@
     android:fitsSystemWindows="true"
     tools:context=".ui.matches.previousmatch.PrevMatchFragment">
 
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/sp_previous_match"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="8dp" />
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srl_previous_match"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/sp_previous_match">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_previous_match"
@@ -22,8 +30,8 @@
     <ProgressBar
         android:id="@+id/pb_previous_match"
         android:layout_width="wrap_content"
-        android:visibility="gone"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
 </RelativeLayout>

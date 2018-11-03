@@ -1,37 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rl_next_match"
+    android:id="@+id/rl_favorite_team"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.matches.nextmatch.NextMatchFragment">
-
-    <android.support.v7.widget.AppCompatSpinner
-        android:id="@+id/sp_next_match"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_margin="8dp" />
+    tools:context=".ui.favorites.favoriteteam.FavoriteTeamFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/srl_next_match"
+        android:id="@+id/srl_favorite_team"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/sp_next_match">
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_next_match"
+            android:id="@+id/rv_favorite_team"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <ProgressBar
-        android:id="@+id/pb_next_match"
+        android:id="@+id/pb_favorite_team"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>

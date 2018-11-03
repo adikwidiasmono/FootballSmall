@@ -15,8 +15,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.small.main.R
 import com.small.main.data.local.entity.TeamEntity
+import com.small.main.ui.teams.detailteam.overview.OverviewFragment
+import com.small.main.ui.teams.detailteam.players.PlayersFragment
 import com.small.main.util.CommonUtils
 import kotlinx.android.synthetic.main.activity_team_detail.*
+import org.jetbrains.anko.bundleOf
 import org.jetbrains.anko.design.snackbar
 import org.koin.android.ext.android.get
 
@@ -36,8 +39,9 @@ class TeamDetailActivity : AppCompatActivity(), TeamDetailView {
         presenter = get()
         presenter.attachView(this)
 
-        toolbar_team_detail.title = "Team Name"
+        toolbar_team_detail.title = ""
         setSupportActionBar(toolbar_team_detail)
+        toolbar_team_detail.setNavigationIcon(R.drawable.ic_back)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
@@ -59,11 +63,11 @@ class TeamDetailActivity : AppCompatActivity(), TeamDetailView {
             }
         })
 
-        setupViewPager(vp_team_detail)
-        tl_team_detail.setupWithViewPager(vp_team_detail)
-
         matchItem = intent.getSerializableExtra("TEAM_RESULT") as TeamEntity
         matchItem?.let {
+            setupViewPager(vp_team_detail)
+            tl_team_detail.setupWithViewPager(vp_team_detail)
+
             Glide.with(this)
                     .load(it.strTeamBadge)
                     .apply(RequestOptions()
@@ -75,67 +79,6 @@ class TeamDetailActivity : AppCompatActivity(), TeamDetailView {
             tv_team_name.text = CommonUtils.safePresentString(it.strTeam)
             tv_team_year_established.text = CommonUtils.safePresentString(it.intFormedYear.toString())
             tv_team_stadium.text = CommonUtils.safePresentString(it.strStadium)
-
-            //            var matchDate: Date
-//
-//            if (it.strTime == null) {
-//                matchDate = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-//                        .parse(it.dateEvent)
-//            } else if (it.strTime?.contains("\\+")!!) {
-//                matchDate = SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ", Locale.ENGLISH)
-//                        .parse(it.dateEvent + " " + it.strTime)
-//            } else {
-//                matchDate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
-//                        .parse(it.dateEvent + " " + it.strTime)
-//            }
-//
-//            tv_match_date.text = CommonUtils.getStringLocalDate(matchDate)
-//
-//            val strs = it.strEvent?.split("vs")
-//            var homeTeam = "-"
-//            var awayTeam = "-"
-//            if (strs != null && strs?.size > 1) {
-//                homeTeam = strs?.get(0)?.trim()
-//                awayTeam = strs?.get(1)?.trim()
-//            }
-//
-//            if (homeTeam.length > 14)
-//                homeTeam.substring(0, 11) + "..."
-//            if (awayTeam.length > 14)
-//                awayTeam.substring(0, 11) + "..."
-//
-//            tv_home_team_name.text = CommonUtils.safePresentString(homeTeam)
-//            tv_away_team_name.text = CommonUtils.safePresentString(awayTeam)
-//
-//            tv_home_team_score.text = CommonUtils.safePresentString(it.intHomeScore.toString())
-//            tv_away_team_score.text = CommonUtils.safePresentString(it.intAwayScore.toString())
-//
-//            tv_home_formation.text = CommonUtils.safePresentString(it.strHomeFormation)
-//            tv_away_formation.text = CommonUtils.safePresentString(it.strAwayFormation)
-//
-//            tv_home_goal_players.text = CommonUtils.safePresentString(it.strHomeGoalDetails?.replace(";", "\n"))
-//            tv_away_goal_players.text = CommonUtils.safePresentString(it.strAwayGoalDetails?.replace(";", "\n"))
-//
-//            tv_home_shots.text = CommonUtils.safePresentString(it.intHomeShots.toString())
-//            tv_away_shots.text = CommonUtils.safePresentString(it.intAwayShots.toString())
-//
-//            tv_home_goalkeeper.text = CommonUtils.safePresentString(it.strHomeLineupGoalkeeper)
-//            tv_away_goalkeeper.text = CommonUtils.safePresentString(it.strAwayLineupGoalkeeper)
-//
-//            tv_home_defense.text = CommonUtils.safePresentString(it.strHomeLineupDefense)
-//            tv_away_defense.text = CommonUtils.safePresentString(it.strAwayLineupDefense)
-//
-//            tv_home_midfiled.text = CommonUtils.safePresentString(it.strHomeLineupMidfield)
-//            tv_away_midfield.text = CommonUtils.safePresentString(it.strAwayLineupMidfield)
-//
-//            tv_home_forward.text = CommonUtils.safePresentString(it.strHomeLineupForward)
-//            tv_away_forward.text = CommonUtils.safePresentString(it.strAwayLineupForward)
-//
-//            tv_home_subtitutes.text = CommonUtils.safePresentString(it.strHomeLineupSubstitutes)
-//            tv_away_subtitutes.text = CommonUtils.safePresentString(it.strAwayLineupSubstitutes)
-//
-//            it.idHomeTeam?.let { presenter.setTeamLogo(this, it, iv_home_logo) }
-//            it.idAwayTeam?.let { presenter.setTeamLogo(this, it, iv_away_logo) }
 
             presenter.checkFavoriteState(it)
         }
@@ -226,8 +169,8 @@ class TeamDetailActivity : AppCompatActivity(), TeamDetailView {
 
     private fun setupViewPager(viewPager: ViewPager) {
         val adapter = ViewPagerAdapter(supportFragmentManager)
-//        adapter.addFragment(PrevMatchFragment(), getString(R.string.prev_match))
-//        adapter.addFragment(NextMatchFragment(), getString(R.string.next_match))
+        adapter.addFragment(OverviewFragment(), getString(R.string.overview), bundleOf(("TEAM_RESULT" to matchItem)))
+        adapter.addFragment(PlayersFragment(), getString(R.string.players), bundleOf(("TEAM_RESULT" to matchItem)))
         viewPager.adapter = adapter
     }
 
@@ -251,6 +194,13 @@ class TeamDetailActivity : AppCompatActivity(), TeamDetailView {
             listFragment.add(fragment)
             listFragmentTitle.add(title)
         }
+
+        fun addFragment(fragment: Fragment, title: String, bundle: Bundle) {
+            fragment.arguments = bundle
+            listFragment.add(fragment)
+            listFragmentTitle.add(title)
+        }
+
     }
 
 }
