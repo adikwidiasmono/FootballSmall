@@ -178,6 +178,7 @@ class TeamsFragment : Fragment(), TeamsView {
         Log.e("onSearchTeam", "->" + queryTeamName)
         if (queryTeamName.length < 1) {
             sp_teams.visible()
+            presenter.loadTeams(idLeague)
         } else {
             sp_teams.gone()
             presenter.searchTeam(queryTeamName)

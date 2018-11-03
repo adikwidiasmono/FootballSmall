@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Theme.CusAppBar" parent="android:Theme.Holo">
+        <item name="android:homeAsUpIndicator">@drawable/ic_back</item>
+    </style>
+
 </resources>
