@@ -119,7 +119,6 @@ class TeamsFragment : Fragment(), TeamsView {
                 idLeague = spAdapter.getItem(position)?.idLeague ?: 4328
                 presenter.loadTeams(idLeague)
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
